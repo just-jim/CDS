@@ -1,0 +1,82 @@
+[
+  {
+    "assetId": "ASSET001",
+    "name": "Millennium Falcon Concept Art",
+    "description": "High-resolution concept art of the Millennium Falcon spaceship used in the Star Wars films.",
+    "fileFormat": "ToBeDefined",
+    "fileSize": "ToBeDefined",
+    "path": "/path/to/asset001.jpg"
+  },
+  {
+    "assetId": "ASSET002",
+    "name": "Lightsaber Prop",
+    "description": "Photographs of a replica lightsaber prop used in Star Wars cosplay.",
+    "fileFormat": "ToBeDefined",
+    "fileSize": "ToBeDefined",
+    "path": "/path/to/asset002.png"
+  },
+  {
+    "assetId": "ASSET003",
+    "name": "Darth Vader Costume",
+    "description": "Images showcasing a detailed Darth Vader costume with helmet, cape, and armor.",
+    "fileFormat": "ToBeDefined",
+    "fileSize": "ToBeDefined",
+    "path": "/path/to/asset003.jpg"
+  },
+  {
+    "assetId": "ASSET004",
+    "name": "Star Wars Sound Effects",
+    "description": "A collection of iconic Star Wars sound effects in WAV format.",
+    "fileFormat": "ToBeDefined",
+    "fileSize": "ToBeDefined",
+    "path": "/path/to/asset004.wav"
+  },
+  {
+    "assetId": "ASSET005",
+    "name": "Star Wars Movie Poster",
+    "description": "A high-resolution poster featuring the characters and scenes from the Star Wars saga.",
+    "fileFormat": "ToBeDefined",
+    "fileSize": "ToBeDefined",
+    "path": "/path/to/asset005.pdf"
+  },
+  {
+    "assetId": "ASSET006",
+    "name": "Yoda 3D Model",
+    "description": "A 3D model of the character Yoda, suitable for animation and visual effects.",
+    "fileFormat": "ToBeDefined",
+    "fileSize": "ToBeDefined",
+    "path": "/path/to/asset006.obj"
+  },
+  {
+    "assetId": "ASSET007",
+    "name": "Stormtrooper Helmet",
+    "description": "Photographs of a replica Stormtrooper helmet used in Star Wars fan events.",
+    "fileFormat": "ToBeDefined",
+    "fileSize": "ToBeDefined",
+    "path": "/path/to/asset007.jpg"
+  },
+  {
+    "assetId": "ASSET008",
+    "name": "Star Wars Music Score",
+    "description": "Sheet music and MIDI files for the iconic Star Wars theme music composed by John Williams.",
+    "fileFormat": "ToBeDefined",
+    "fileSize": "ToBeDefined",
+    "path": "/path/to/asset008.pdf"
+  },
+  {
+    "assetId": "ASSET009",
+    "name": "BB-8 Toy",
+    "description": "Images of a remote-controlled BB-8 toy, a popular Star Wars merchandise item.",
+    "fileFormat": "ToBeDefined",
+    "fileSize": "ToBeDefined",
+    "path": "/path/to/asset009.jpg"
+  },
+  {
+    "assetId": "ASSET010",
+    "name": "R2-D2 Wallpaper",
+    "description": "A high-resolution wallpaper featuring the astromech droid R2-D2.",
+    "fileFormat": "ToBeDefined",
+    "fileSize": "ToBeDefined",
+    "path": "/path/to/asset010.jpg"
+  }
+]

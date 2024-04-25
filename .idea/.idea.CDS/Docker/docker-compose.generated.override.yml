@@ -1,0 +1,40 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  cds.api:
+    build:
+      context: "/Users/just_jim/Desktop/CDS"
+      dockerfile: "CDS.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/CDS.API.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "cds.api:dev"
+    ports: []
+    volumes:
+    - "/Users/just_jim/.nuget/packages:/home/app/.nuget/packages"
+    - "/Users/just_jim/Desktop/CDS/CDS.API:/app:rw"
+    - "/Users/just_jim/Desktop/CDS:/src:rw"
+    working_dir: "/app"
+  mock.asset:
+    build:
+      context: "/Users/just_jim/Desktop/CDS"
+      dockerfile: "Mock.Asset/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Mock.Asset.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "mock.asset:dev"
+    ports: []
+    volumes:
+    - "/Users/just_jim/.nuget/packages:/home/app/.nuget/packages"
+    - "/Users/just_jim/Desktop/CDS/Mock.Asset:/app:rw"
+    - "/Users/just_jim/Desktop/CDS:/src:rw"
+    working_dir: "/app"

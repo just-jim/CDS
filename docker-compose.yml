@@ -1,4 +1,4 @@
-services:
+﻿services:
   cds.api:
     image: cds.api
     build:
@@ -6,3 +6,11 @@ services:
       dockerfile: CDS.API/Dockerfile
     ports:
       - "8080:8080"
+
+  mock.asset:
+    image: mock.asset
+    build:
+      context: .
+      dockerfile: Mock.Asset/Dockerfile
+    ports:
+      - "8081:8080"
