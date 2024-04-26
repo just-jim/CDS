@@ -22,3 +22,11 @@
       dockerfile: Mock.Order/Dockerfile
     ports:
       - "8082:8080"
+
+  mock.briefing:
+    image: mock.briefing
+    build:
+      context: .
+      dockerfile: Mock.Briefing/Dockerfile
+    ports:
+      - "8083:8080"

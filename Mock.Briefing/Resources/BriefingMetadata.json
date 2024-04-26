@@ -1,0 +1,62 @@
+[
+    {
+      "name": "Millennium Falcon Concept Art",
+      "description": "High-resolution concept art of the Millennium Falcon spaceship used in the Star Wars films.",
+      "createdBy": "John Doe",
+      "createdDate": "2023-07-01"
+    },
+    {
+      "name": "Lightsaber Prop",
+      "description": "Photographs of a replica lightsaber prop used in Star Wars cosplay.",
+      "createdBy": "Jane Smith",
+      "createdDate": "2023-07-02"
+    },
+    {
+      "name": "Darth Vader Costume",
+      "description": "Images showcasing a detailed Darth Vader costume with helmet, cape, and armor.",
+      "createdBy": "Mark Johnson",
+      "createdDate": "2023-07-03"
+    },
+    {
+      "name": "Star Wars Sound Effects",
+      "description": "A collection of iconic Star Wars sound effects in WAV format.",
+      "createdBy": "Emily Wilson",
+      "createdDate": "2023-07-04"
+    },
+    {
+      "name": "Star Wars Movie Poster",
+      "description": "A high-resolution poster featuring the characters and scenes from the Star Wars saga.",
+      "createdBy": "David Brown",
+      "createdDate": "2023-07-05"
+    },
+    {
+      "name": "Yoda 3D Model",
+      "description": "A 3D model of the character Yoda, suitable for animation and visual effects.",
+      "createdBy": "Sarah Thompson",
+      "createdDate": "2023-07-06"
+    },
+    {
+      "name": "Stormtrooper Helmet",
+      "description": "Photographs of a replica Stormtrooper helmet used in Star Wars fan events.",
+      "createdBy": "Michael Davis",
+      "createdDate": "2023-07-07"
+    },
+    {
+      "name": "Star Wars Music Score",
+      "description": "Sheet music and MIDI files for the iconic Star Wars theme music composed by John Williams.",
+      "createdBy": "Amy Anderson",
+      "createdDate": "2023-07-08"
+    },
+    {
+      "name": "BB-8 Toy",
+      "description": "Images of a remote-controlled BB-8 toy, a popular Star Wars merchandise item.",
+      "createdBy": "Robert Wilson",
+      "createdDate": "2023-07-09"
+    },
+    {
+      "name": "R2-D2 Wallpaper",
+      "description": "A high-resolution wallpaper featuring the astromech droid R2-D2.",
+      "createdBy": "Laura Garcia",
+      "createdDate": "2023-07-10"
+    }
+]
