@@ -1,0 +1,29 @@
+{
+	"info": {
+		"_postman_id": "eb7fcddb-ddda-4161-a516-1ccea9678385",
+		"name": "Mock.Content.Distribution",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33498941"
+	},
+	"item": [
+		{
+			"name": "Cache the content distribution",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{contentDistributionHost}}/content-distribution/cache",
+					"protocol": "http",
+					"host": [
+						"{{contentDistributionHost}}"
+					],
+					"path": [
+						"content-distribution",
+						"cache"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

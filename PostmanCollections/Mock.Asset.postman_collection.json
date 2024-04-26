@@ -1,0 +1,47 @@
+{
+	"info": {
+		"_postman_id": "64cc5b07-c351-4718-9416-aa89128b0d75",
+		"name": "Mock.Asset",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33498941"
+	},
+	"item": [
+		{
+			"name": "Assets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{assetHost}}/assets",
+					"protocol": "http",
+					"host": [
+						"{{assetHost}}"
+					],
+					"path": [
+						"assets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Emit Asset to SQS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{assetHost}}/assets/ASSET001",
+					"protocol": "http",
+					"host": [
+						"{{assetHost}}"
+					],
+					"path": [
+						"assets",
+						"ASSET001"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

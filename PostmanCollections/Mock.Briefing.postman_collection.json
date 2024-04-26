@@ -1,0 +1,47 @@
+{
+	"info": {
+		"_postman_id": "769771cf-67b4-4745-bd94-0dfc0f0ae1ac",
+		"name": "Mock.Briefing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33498941"
+	},
+	"item": [
+		{
+			"name": "Briefings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{briefingHost}}/briefings",
+					"protocol": "http",
+					"host": [
+						"{{briefingHost}}"
+					],
+					"path": [
+						"briefings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Briefing by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{briefingHost}}/briefings/Lightsaber Prop",
+					"protocol": "http",
+					"host": [
+						"{{briefingHost}}"
+					],
+					"path": [
+						"briefings",
+						"Lightsaber Prop"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
