@@ -1,0 +1,58 @@
+{
+  "distributionDate": "2023-07-15",
+  "distributionChannel": "Online Store",
+  "distributionMethod": "Digital Download",
+  "assets":
+  [
+    {
+      "assetId": "ASSET001",
+      "name": "Millennium Falcon Concept Art",
+      "fileURL": "https://example.com/assets/ASSET001.jpg"
+    },
+    {
+      "assetId": "ASSET002",
+      "name": "Lightsaber Prop",
+      "fileURL": "https://example.com/assets/ASSET002.png"
+    },
+    {
+      "assetId": "ASSET003",
+      "name": "Darth Vader Costume",
+      "fileURL": "https://example.com/assets/ASSET003.jpg"
+    },
+    {
+      "assetId": "ASSET004",
+      "name": "Star Wars Sound Effects",
+      "fileURL": "https://example.com/assets/ASSET004.wav"
+    },
+    {
+      "assetId": "ASSET005",
+      "name": "Star Wars Movie Poster",
+      "fileURL": "https://example.com/assets/ASSET005.pdf"
+    },
+    {
+      "assetId": "ASSET006",
+      "name": "Yoda 3D Model",
+      "fileURL": "https://example.com/assets/ASSET006.obj"
+    },
+    {
+      "assetId": "ASSET007",
+      "name": "Stormtrooper Helmet",
+      "fileURL": "https://example.com/assets/ASSET007.jpg"
+    },
+    {
+      "assetId": "ASSET008",
+      "name": "Star Wars Music Score",
+      "fileURL": "https://example.com/assets/ASSET008.pdf"
+    },
+    {
+      "assetId": "ASSET009",
+      "name": "BB-8 Toy",
+      "fileURL": "https://example.com/assets/ASSET009.jpg"
+    },
+    {
+      "assetId": "ASSET010",
+      "name": "R2-D2 Wallpaper",
+      "fileURL": "https://example.com/assets/ASSET010.jpg"
+    }
+  ]
+}

@@ -38,3 +38,60 @@ services:
     - "/Users/just_jim/Desktop/CDS/Mock.Asset:/app:rw"
     - "/Users/just_jim/Desktop/CDS:/src:rw"
     working_dir: "/app"
+  mock.briefing:
+    build:
+      context: "/Users/just_jim/Desktop/CDS"
+      dockerfile: "Mock.Briefing/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Mock.Briefing.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "mock.briefing:dev"
+    ports: []
+    volumes:
+    - "/Users/just_jim/.nuget/packages:/home/app/.nuget/packages"
+    - "/Users/just_jim/Desktop/CDS/Mock.Briefing:/app:rw"
+    - "/Users/just_jim/Desktop/CDS:/src:rw"
+    working_dir: "/app"
+  mock.content.distribution:
+    build:
+      context: "/Users/just_jim/Desktop/CDS"
+      dockerfile: "Mock.Content.Distribution/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Mock.Content.Distribution.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "mock.content.distribution:dev"
+    ports: []
+    volumes:
+    - "/Users/just_jim/.nuget/packages:/home/app/.nuget/packages"
+    - "/Users/just_jim/Desktop/CDS/Mock.Content.Distribution:/app:rw"
+    - "/Users/just_jim/Desktop/CDS:/src:rw"
+    working_dir: "/app"
+  mock.order:
+    build:
+      context: "/Users/just_jim/Desktop/CDS"
+      dockerfile: "Mock.Order/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Mock.Order.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "mock.order:dev"
+    ports: []
+    volumes:
+    - "/Users/just_jim/.nuget/packages:/home/app/.nuget/packages"
+    - "/Users/just_jim/Desktop/CDS/Mock.Order:/app:rw"
+    - "/Users/just_jim/Desktop/CDS:/src:rw"
+    working_dir: "/app"

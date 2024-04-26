@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Order", "Mock.Order\Mo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Briefing", "Mock.Briefing\Mock.Briefing.csproj", "{D0149B1E-26FD-4283-8E98-D1BDC7429E3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Content.Distribution", "Mock.Content.Distribution\Mock.Content.Distribution.csproj", "{15B61553-3D6D-436C-A67B-56D653472022}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +37,9 @@ Global
 		{D0149B1E-26FD-4283-8E98-D1BDC7429E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0149B1E-26FD-4283-8E98-D1BDC7429E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0149B1E-26FD-4283-8E98-D1BDC7429E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15B61553-3D6D-436C-A67B-56D653472022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B61553-3D6D-436C-A67B-56D653472022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B61553-3D6D-436C-A67B-56D653472022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B61553-3D6D-436C-A67B-56D653472022}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
