@@ -1,5 +1,3 @@
-using Amazon.Runtime;
-using Amazon.SQS;
 using Mock.Asset.Models;
 using Mock.Asset.Repositories;
 using Mock.Asset.Services;
@@ -10,13 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<AssetRepository>();
-
-var sqsClient = new AmazonSQSClient(
-    new BasicAWSCredentials("ignore", "ignore"), 
-    new AmazonSQSConfig{
-    ServiceURL = "http://localhost.localstack.cloud:4566"
-});
-var publisher = new SqsController(sqsClient);
+builder.Services.AddSingleton<ISqsController, AwsSqsController>();
 
 var app = builder.Build();
 
@@ -30,7 +22,7 @@ app.MapGet("/assets", (AssetRepository repo) => {
     return Results.Ok(assets);
 });
 
-app.MapPost("/assets/{id}", async (AssetRepository repo, string id) => {
+app.MapPost("/assets/{id}", async (AssetRepository repo, ISqsController publisher, string id) => {
     var asset = repo.GetById(id);
 
     if (asset == null) {

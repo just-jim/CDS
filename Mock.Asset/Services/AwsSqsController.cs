@@ -1,15 +1,21 @@
 using System.Text.Json;
+using Amazon.Runtime;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 
 namespace Mock.Asset.Services;
 
-public class SqsController(IAmazonSQS sqs) {
+public class AwsSqsController : ISqsController {
+    readonly AmazonSQSClient _sqsClient = new AmazonSQSClient(
+        new BasicAWSCredentials("ignore", "ignore"),
+        new AmazonSQSConfig{
+            ServiceURL = "http://localhost.localstack.cloud:4566"
+        });
 
     public async Task Publish<TMessage>(string queueName, TMessage asset) 
         where TMessage : Models.Asset
     {
-        var queueUrl = await sqs.GetQueueUrlAsync(queueName);
+        var queueUrl = await _sqsClient.GetQueueUrlAsync(queueName);
         var request = new SendMessageRequest
         {
             QueueUrl = queueUrl.QueueUrl,
@@ -25,6 +31,6 @@ public class SqsController(IAmazonSQS sqs) {
                 }
             }
         };
-        await sqs.SendMessageAsync(request);
+        await _sqsClient.SendMessageAsync(request);
     }
 }
