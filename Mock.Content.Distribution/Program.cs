@@ -19,6 +19,7 @@ if (app.Environment.IsDevelopment()) {
 app.MapPost("/content-distributions/original", async(ISqsController publisher) => {
     var contentDistribution = ContentDistributionController.Original();
     await publisher.Publish("contentDistributions", contentDistribution);
+    app.Logger.LogInformation($"Content distribution for the date {contentDistribution.DistributionDate} was published in the contentDistributions queue");
     return Results.Ok(contentDistribution);
 });
 

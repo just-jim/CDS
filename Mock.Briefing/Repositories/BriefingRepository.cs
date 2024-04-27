@@ -5,7 +5,7 @@ namespace Mock.Briefing.Repositories;
 internal class BriefingRepository {
     readonly Dictionary<string, Models.Briefing> _briefings = new Dictionary<string, Models.Briefing>();
 
-    public BriefingRepository() {
+    public BriefingRepository(ILogger<BriefingRepository> logger) {
         const string jsonFilePath = "Resources/BriefingMetadata.json";
         string jsonString = File.ReadAllText(jsonFilePath);
         var jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -13,6 +13,8 @@ internal class BriefingRepository {
         foreach (var briefing in JsonSerializer.Deserialize<List<Models.Briefing>>(jsonString, jsonSerializerOptions)!) {
             Create(briefing);
         }
+        
+        logger.LogInformation("Briefing repository initialized");
     }
 
     void Create(Models.Briefing briefing) {

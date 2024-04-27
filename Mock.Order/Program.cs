@@ -19,12 +19,14 @@ if (app.Environment.IsDevelopment()) {
 app.MapPost("/orders/original", async(ISqsController publisher) => {
     var order = OrderController.Original();
     await publisher.Publish("orders", order);
+    app.Logger.LogInformation($"Order {order.OrderNumber} was published in the orders queue");
     return Results.Ok(order);
 });
 
 app.MapPost("/orders/random", async(OrderController controller, ISqsController publisher) => {
     var order = controller.Random();
     await publisher.Publish("orders", order);
+    app.Logger.LogInformation($"Order {order.OrderNumber} was published in the orders queue");
     return Results.Ok(order);
 });
 

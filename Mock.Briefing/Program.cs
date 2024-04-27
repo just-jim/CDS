@@ -24,6 +24,7 @@ app.MapGet("/briefings/{name}", (BriefingRepository repo, string name) => {
     var asset = repo.GetByName(name);
 
     if (asset != null) {
+        app.Logger.LogInformation($"Briefing for the asset with '{name}' was served");
         return Results.Ok(asset);
     }
     

@@ -30,6 +30,7 @@ app.MapPost("/assets/{id}", async (AssetRepository repo, ISqsController publishe
     }
     
     await publisher.Publish("assets", asset);
+    app.Logger.LogInformation($"Asset {id} was published in the assets queue");
     return Results.Ok(asset);
 });
 

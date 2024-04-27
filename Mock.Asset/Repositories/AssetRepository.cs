@@ -5,7 +5,7 @@ namespace Mock.Asset.Repositories;
 internal class AssetRepository {
     readonly Dictionary<string, Models.Asset> _assets = new Dictionary<string, Models.Asset>();
 
-    public AssetRepository() {
+    public AssetRepository(ILogger<AssetRepository> logger) {
         const string jsonFilePath = "Resources/AssetMetadata.json";
         string jsonString = File.ReadAllText(jsonFilePath);
         var jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -13,6 +13,7 @@ internal class AssetRepository {
         foreach (var asset in JsonSerializer.Deserialize<List<Models.Asset>>(jsonString, jsonSerializerOptions)!) {
             Create(asset);
         }
+        logger.LogInformation("Asset repository initialized");
     }
 
     void Create(Models.Asset asset) {
@@ -25,18 +26,5 @@ internal class AssetRepository {
 
     public List<Models.Asset> GetAll() {
         return _assets.Values.ToList();
-    }
-
-    public void Update(Models.Asset asset) {
-        var existingAsset = GetById(asset.AssetId);
-        if (existingAsset is null) {
-            return;
-        }
-
-        _assets[asset.AssetId] = asset;
-    }
-
-    public void Delete(string id) {
-        _assets.Remove(id);
     }
 }
