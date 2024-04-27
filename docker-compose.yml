@@ -14,6 +14,10 @@
       dockerfile: Mock.Asset/Dockerfile
     ports:
       - "8081:8080"
+    dns:
+      - 10.0.2.20
+    networks:
+      - ls
 
   mock.order:
     image: mock.order
@@ -38,3 +42,25 @@
       dockerfile: Mock.Content.Distribution/Dockerfile
     ports:
       - "8084:8080"
+  
+  localstack:
+    container_name: "cds-localstack-docker"
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4510-4559:4510-4559"
+    environment:
+      - DEBUG=${DEBUG:-0}
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./localstack_bootstrap:/etc/localstack/init/ready.d"
+    networks:
+      ls:
+        ipv4_address: 10.0.2.20
+        
+networks:
+  ls:
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24
