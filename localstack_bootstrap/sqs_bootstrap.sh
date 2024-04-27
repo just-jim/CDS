@@ -14,3 +14,4 @@ create_queue() {
 
 create_queue "assets"
 create_queue "orders"
+create_queue "contentDistributions"

@@ -7,19 +7,19 @@
 	},
 	"item": [
 		{
-			"name": "Cache the content distribution",
+			"name": "Emit original content distribution to SQS",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{contentDistributionHost}}/content-distribution/cache",
+					"raw": "http://{{contentDistributionHost}}/content-distributions/original",
 					"protocol": "http",
 					"host": [
 						"{{contentDistributionHost}}"
 					],
 					"path": [
-						"content-distribution",
-						"cache"
+						"content-distributions",
+						"original"
 					]
 				}
 			},

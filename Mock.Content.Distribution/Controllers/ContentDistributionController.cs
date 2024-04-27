@@ -15,7 +15,7 @@ internal class ContentDistributionController {
         return JsonSerializer.Deserialize<ContentDistribution>(jsonString, JsonSerializerOptions)!;
     }
 
-    public ContentDistribution Cache() {
+    public static ContentDistribution Original() {
         return ParseJson();
     }
 }

@@ -46,6 +46,10 @@
       dockerfile: Mock.Content.Distribution/Dockerfile
     ports:
       - "8084:8080"
+    dns:
+      - 10.0.2.20
+    networks:
+      - ls
   
   localstack:
     container_name: "cds-localstack-docker"
