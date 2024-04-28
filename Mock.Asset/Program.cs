@@ -3,6 +3,7 @@ using Mock.Asset.Repositories;
 using Mock.Asset.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -29,7 +30,7 @@ app.MapPost("/assets/{id}", async (AssetRepository repo, ISqsController publishe
         return Results.NotFound($"The asset with id {id} doesn't exist");
     }
     
-    await publisher.Publish("assets", asset);
+    await publisher.Publish(configuration["SqsQueueName"]!, asset);
     app.Logger.LogInformation($"Asset {id} was published in the assets queue");
     return Results.Ok(asset);
 });

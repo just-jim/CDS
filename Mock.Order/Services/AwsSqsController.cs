@@ -5,12 +5,11 @@ using Amazon.SQS.Model;
 
 namespace Mock.Order.Services;
 
-public class AwsSqsController : ISqsController {
+public class AwsSqsController(IConfiguration configuration) : ISqsController {
     readonly AmazonSQSClient _sqsClient = new AmazonSQSClient(
         new BasicAWSCredentials("ignore", "ignore"),
-        new AmazonSQSConfig{
-            ServiceURL = "http://localhost.localstack.cloud:4566"
-        });
+        new AmazonSQSConfig{ ServiceURL = configuration["LocalStackHost"] }
+    );
 
     public async Task Publish<TMessage>(string queueName, TMessage order) 
         where TMessage : Models.Order

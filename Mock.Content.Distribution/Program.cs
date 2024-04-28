@@ -2,6 +2,7 @@ using Mock.Content.Distribution.Controllers;
 using Mock.Content.Distribution.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -18,7 +19,7 @@ if (app.Environment.IsDevelopment()) {
 
 app.MapPost("/content-distributions/original", async(ISqsController publisher) => {
     var contentDistribution = ContentDistributionController.Original();
-    await publisher.Publish("contentDistributions", contentDistribution);
+    await publisher.Publish(configuration["SqsQueueName"]!, contentDistribution);
     app.Logger.LogInformation($"Content distribution for the date {contentDistribution.DistributionDate} was published in the contentDistributions queue");
     return Results.Ok(contentDistribution);
 });
