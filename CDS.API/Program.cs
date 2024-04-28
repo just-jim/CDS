@@ -5,36 +5,39 @@ using CDS.Adapters.ContentDistributionDomainAdapter.Consumers;
 using CDS.Adapters.OrderDomainAdapter.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+{
+    var configuration = builder.Configuration;
+    builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    // Set up the AWS sqs client
+    var amazonSqsClient = new AmazonSQSClient(
+        new BasicAWSCredentials("ignore", "ignore"),
+        new AmazonSQSConfig { ServiceURL = configuration["LocalStackHost"] }
+    );
+    builder.Services.AddSingleton<IAmazonSQS>(_ => amazonSqsClient);
 
-// Set up the AWS sqs client
-var amazonSqsClient = new AmazonSQSClient(
-    new BasicAWSCredentials("ignore", "ignore"),
-    new AmazonSQSConfig { ServiceURL = configuration["LocalStackHost"] }
-);
-builder.Services.AddSingleton<IAmazonSQS>(_ => amazonSqsClient);
+    // To allow polling within IHostedServices we need to allow concurrent running of services
+    builder.Services.Configure<HostOptions>(x => {
+        x.ServicesStartConcurrently = true;
+        x.ServicesStopConcurrently = false;
+    });
 
-// To allow polling within IHostedServices we need to allow concurrent running of services
-builder.Services.Configure<HostOptions>(x => {
-    x.ServicesStartConcurrently = true;
-    x.ServicesStopConcurrently = false;
-});
-
-// Add the sqs consumers to consume messages from the external domains
-builder.Services.AddHostedService<AssetSqsConsumerService>();
-builder.Services.AddHostedService<OrderSqsConsumerService>();
-builder.Services.AddHostedService<ContentDistributionSqsConsumerService>();
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment()) {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // Add the sqs consumers to consume messages from the external domains
+    builder.Services.AddHostedService<AssetSqsConsumerService>();
+    builder.Services.AddHostedService<OrderSqsConsumerService>();
+    builder.Services.AddHostedService<ContentDistributionSqsConsumerService>();
 }
 
-app.MapControllers();
+var app = builder.Build();
+{
+    if (app.Environment.IsDevelopment()) {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
-app.Run();
+    app.MapControllers();
+
+    app.Run();
+}
+
