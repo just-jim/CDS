@@ -4,7 +4,7 @@ using Mock.Content.Distribution.Models;
 namespace Mock.Content.Distribution.Controllers;
 
 internal class ContentDistributionController {
-    
+
     static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {
         PropertyNameCaseInsensitive = true
     };

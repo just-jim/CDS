@@ -27,7 +27,7 @@ internal class OrderController {
         "Jyn Erso"
     ];
     readonly Random _random = new Random();
-    
+
     static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {
         PropertyNameCaseInsensitive = true
     };
@@ -63,8 +63,7 @@ internal class OrderController {
         return order;
     }
 
-    T Any<T>(IReadOnlyList<T> list)
-    {
+    T Any<T>(IReadOnlyList<T> list) {
         int randomIndex = _random.Next(list.Count);
         return list[randomIndex];
     }

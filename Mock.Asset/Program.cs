@@ -29,7 +29,7 @@ app.MapPost("/assets/{id}", async (AssetRepository repo, ISqsController publishe
     if (asset == null) {
         return Results.NotFound($"The asset with id {id} doesn't exist");
     }
-    
+
     await publisher.Publish(configuration["SqsQueueName"]!, asset);
     app.Logger.LogInformation($"Asset {id} was published in the assets queue");
     return Results.Ok(asset);

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace CDS.Adapters.AssetDomainAdapter.Consumers;
 
 public class AssetSqsConsumerService(ILogger<AssetSqsConsumerService> logger, IAmazonSQS sqs, IConfiguration configuration) : ISqsConsumerService {
- public Type GetMessageObjectType() {
+    public Type GetMessageObjectType() {
         return typeof(AssetDomainAsset);
     }
 

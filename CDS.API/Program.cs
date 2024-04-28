@@ -11,8 +11,8 @@ builder.Services.AddSwaggerGen();
 // Set up the AWS sqs client
 var amazonSqsClient = new AmazonSQSClient(
     new BasicAWSCredentials("ignore", "ignore"),
-    new AmazonSQSConfig{ ServiceURL = configuration["LocalStackHost"] }
- );
+    new AmazonSQSConfig { ServiceURL = configuration["LocalStackHost"] }
+);
 builder.Services.AddSingleton<IAmazonSQS>(_ => amazonSqsClient);
 
 // To allow polling within IHostedServices we need to allow concurrent running of services

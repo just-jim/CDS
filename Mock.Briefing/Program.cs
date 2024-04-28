@@ -27,7 +27,7 @@ app.MapGet("/briefings/{name}", (BriefingRepository repo, string name) => {
         app.Logger.LogInformation($"Briefing for the asset with '{name}' was served");
         return Results.Ok(asset);
     }
-    
+
     var error = new {
         error = "Briefing Not Found",
         message = $"The briefing with name '{name}' was not found"

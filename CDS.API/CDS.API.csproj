@@ -12,17 +12,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
+        <Folder Include="Controllers\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CDS.Adapters\CDS.Adapters.csproj" />
+        <ProjectReference Include="..\CDS.Adapters\CDS.Adapters.csproj"/>
     </ItemGroup>
 
 </Project>

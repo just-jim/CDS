@@ -13,7 +13,7 @@ internal class BriefingRepository {
         foreach (var briefing in JsonSerializer.Deserialize<List<Models.Briefing>>(jsonString, jsonSerializerOptions)!) {
             Create(briefing);
         }
-        
+
         logger.LogInformation("Briefing repository initialized");
     }
 

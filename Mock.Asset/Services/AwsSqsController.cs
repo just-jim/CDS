@@ -8,21 +8,18 @@ namespace Mock.Asset.Services;
 public class AwsSqsController(IConfiguration configuration) : ISqsController {
     readonly AmazonSQSClient _sqsClient = new AmazonSQSClient(
         new BasicAWSCredentials("ignore", "ignore"),
-        new AmazonSQSConfig{ ServiceURL = configuration["LocalStackHost"] }
+        new AmazonSQSConfig { ServiceURL = configuration["LocalStackHost"] }
     );
 
-    public async Task Publish<TMessage>(string queueName, TMessage asset) 
-        where TMessage : Models.Asset
-    {
+    public async Task Publish<TMessage>(string queueName, TMessage asset)
+        where TMessage : Models.Asset {
         var queueUrl = await _sqsClient.GetQueueUrlAsync(queueName);
-        var request = new SendMessageRequest
-        {
+        var request = new SendMessageRequest {
             QueueUrl = queueUrl.QueueUrl,
             MessageBody = JsonSerializer.Serialize(asset),
-            MessageAttributes = new Dictionary<string, MessageAttributeValue>
-            {
+            MessageAttributes = new Dictionary<string, MessageAttributeValue> {
                 {
-                    "asset", 
+                    "asset",
                     new MessageAttributeValue {
                         StringValue = "asset",
                         DataType = "String"

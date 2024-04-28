@@ -17,7 +17,7 @@ if (app.Environment.IsDevelopment()) {
     app.UseSwaggerUI();
 }
 
-app.MapPost("/content-distributions/original", async(ISqsController publisher) => {
+app.MapPost("/content-distributions/original", async (ISqsController publisher) => {
     var contentDistribution = ContentDistributionController.Original();
     await publisher.Publish(configuration["SqsQueueName"]!, contentDistribution);
     app.Logger.LogInformation($"Content distribution for the date {contentDistribution.DistributionDate} was published in the contentDistributions queue");
