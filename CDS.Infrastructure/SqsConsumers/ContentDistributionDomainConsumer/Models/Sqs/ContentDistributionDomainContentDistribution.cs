@@ -1,6 +1,6 @@
-﻿using CDS.Adapters.Interfaces;
+﻿using CDS.Infrastructure.SqsConsumers.Interfaces;
 
-namespace CDS.Adapters.ContentDistributionDomainAdapter.Models.Sqs;
+namespace CDS.Infrastructure.SqsConsumers.ContentDistributionDomainConsumer.Models.Sqs;
 
 public class ContentDistributionDomainContentDistribution : IMessage {
     public string DistributionDate { get; set; }

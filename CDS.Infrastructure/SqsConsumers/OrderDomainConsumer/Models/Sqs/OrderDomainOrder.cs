@@ -1,6 +1,6 @@
-﻿using CDS.Adapters.Interfaces;
+﻿using CDS.Infrastructure.SqsConsumers.Interfaces;
 
-namespace CDS.Adapters.OrderDomainAdapter.Models.Sqs;
+namespace CDS.Infrastructure.SqsConsumers.OrderDomainConsumer.Models.Sqs;
 
 public class OrderDomainOrder : IMessage {
     public string OrderNumber { get; set; }

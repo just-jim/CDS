@@ -1,11 +1,11 @@
 ﻿using Amazon.SQS;
-using CDS.Adapters.AssetDomainAdapter.Models.Sqs;
-using CDS.Adapters.Interfaces;
-using CDS.Adapters.Poller;
+using CDS.Infrastructure.SqsConsumers.AssetDomainConsumer.Models.Sqs;
+using CDS.Infrastructure.SqsConsumers.Interfaces;
+using CDS.Infrastructure.SqsConsumers.Poller;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace CDS.Adapters.AssetDomainAdapter.Consumers;
+namespace CDS.Infrastructure.SqsConsumers.AssetDomainConsumer.Consumers;
 
 public class AssetSqsConsumerService(ILogger<AssetSqsConsumerService> logger, IAmazonSQS sqs, IConfiguration configuration) : ISqsConsumerService {
     public Type GetMessageObjectType() {

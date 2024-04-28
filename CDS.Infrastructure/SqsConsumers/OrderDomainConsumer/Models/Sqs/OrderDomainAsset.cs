@@ -1,4 +1,4 @@
-﻿namespace CDS.Adapters.OrderDomainAdapter.Models.Sqs;
+﻿namespace CDS.Infrastructure.SqsConsumers.OrderDomainConsumer.Models.Sqs;
 
 public class OrderDomainAsset {
     public string AssetId { get; set; }

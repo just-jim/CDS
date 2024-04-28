@@ -8,7 +8,7 @@ namespace Mock.Order.Services;
 public class AwsSqsController(IConfiguration configuration) : ISqsController {
     readonly AmazonSQSClient _sqsClient = new AmazonSQSClient(
         new BasicAWSCredentials("ignore", "ignore"),
-        new AmazonSQSConfig { ServiceURL = configuration["LocalStackHost"] }
+        new AmazonSQSConfig { ServiceURL = configuration.GetConnectionString("LocalStack") }
     );
 
     public async Task Publish<TMessage>(string queueName, TMessage order)

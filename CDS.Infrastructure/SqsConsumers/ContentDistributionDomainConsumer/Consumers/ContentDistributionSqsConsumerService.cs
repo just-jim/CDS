@@ -1,11 +1,11 @@
 ﻿using Amazon.SQS;
-using CDS.Adapters.ContentDistributionDomainAdapter.Models.Sqs;
-using CDS.Adapters.Interfaces;
-using CDS.Adapters.Poller;
+using CDS.Infrastructure.SqsConsumers.ContentDistributionDomainConsumer.Models.Sqs;
+using CDS.Infrastructure.SqsConsumers.Interfaces;
+using CDS.Infrastructure.SqsConsumers.Poller;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace CDS.Adapters.ContentDistributionDomainAdapter.Consumers;
+namespace CDS.Infrastructure.SqsConsumers.ContentDistributionDomainConsumer.Consumers;
 
 public class ContentDistributionSqsConsumerService(ILogger<ContentDistributionSqsConsumerService> logger, IAmazonSQS sqs, IConfiguration configuration) : ISqsConsumerService {
     public Type GetMessageObjectType() {

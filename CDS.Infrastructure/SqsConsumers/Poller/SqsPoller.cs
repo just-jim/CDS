@@ -2,10 +2,10 @@ using System.Net;
 using System.Text.Json;
 using Amazon.SQS;
 using Amazon.SQS.Model;
-using CDS.Adapters.Interfaces;
+using CDS.Infrastructure.SqsConsumers.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace CDS.Adapters.Poller;
+namespace CDS.Infrastructure.SqsConsumers.Poller;
 
 public class SqsPoller(ILogger logger, IAmazonSQS sqs) {
     readonly List<string> _messageAttributeNames = ["All"];

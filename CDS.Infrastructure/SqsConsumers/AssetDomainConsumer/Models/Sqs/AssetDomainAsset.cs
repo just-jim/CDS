@@ -1,6 +1,6 @@
-﻿using CDS.Adapters.Interfaces;
+﻿using CDS.Infrastructure.SqsConsumers.Interfaces;
 
-namespace CDS.Adapters.AssetDomainAdapter.Models.Sqs;
+namespace CDS.Infrastructure.SqsConsumers.AssetDomainConsumer.Models.Sqs;
 
 public class AssetDomainAsset : IMessage {
     public string AssetId { get; set; }

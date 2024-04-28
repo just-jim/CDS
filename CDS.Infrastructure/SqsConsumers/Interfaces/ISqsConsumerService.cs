@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Hosting;
 
-namespace CDS.Adapters.Interfaces;
+namespace CDS.Infrastructure.SqsConsumers.Interfaces;
 
 public interface ISqsConsumerService : IHostedService {
     public Type GetMessageObjectType();

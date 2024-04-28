@@ -18,11 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Controllers\"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\CDS.Adapters\CDS.Adapters.csproj"/>
+        <ProjectReference Include="..\CDS.Infrastructure\CDS.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
