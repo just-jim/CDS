@@ -1,6 +1,7 @@
 using Amazon.Runtime;
 using Amazon.SQS;
 using CDS.Adapters.AssetDomainAdapter.Consumers;
+using CDS.Adapters.ContentDistributionDomainAdapter.Consumers;
 using CDS.Adapters.OrderDomainAdapter.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,7 @@ builder.Services.Configure<HostOptions>(x => {
 // Add the sqs consumers to consume messages from the external domains
 builder.Services.AddHostedService<AssetSqsConsumerService>();
 builder.Services.AddHostedService<OrderSqsConsumerService>();
+builder.Services.AddHostedService<ContentDistributionSqsConsumerService>();
 
 var app = builder.Build();
 
