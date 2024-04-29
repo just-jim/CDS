@@ -1,4 +1,4 @@
-﻿services:
+services:
   cds.api:
     image: cds.api
     build:
@@ -66,11 +66,23 @@
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "./localstack_bootstrap:/etc/localstack/init/ready.d"
+      - "./bootstrap/localstack:/etc/localstack/init/ready.d"
     networks:
       ls:
         ipv4_address: 10.0.2.20
         
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=cds
+      - POSTGRES_USER=cds
+      - POSTGRES_PASSWORD=cds
+    ports:
+      - '5432:5432'
+    volumes:
+      - "./db-data:/var/lib/postgresql/data"
+
 networks:
   ls:
     ipam:
