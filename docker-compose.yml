@@ -1,9 +1,14 @@
 services:
-  cds.api:
+  cds:
+    container_name: "CDS"
+    depends_on:
+      - "db"
     image: cds.api
     build:
       context: .
       dockerfile: CDS.API/Dockerfile
+    environment:
+      - "ConnectionStrings__Postgres=Host=10.0.2.21:5432;Database=cds;Username=cds;Password=cds"
     ports:
       - "8080:8080"
     dns:
@@ -12,6 +17,7 @@ services:
       - ls
 
   mock.asset:
+    container_name: "mock.asset"
     image: mock.asset
     build:
       context: .
@@ -24,6 +30,7 @@ services:
       - ls
 
   mock.order:
+    container_name: "mock.order"
     image: mock.order
     build:
       context: .
@@ -36,14 +43,19 @@ services:
       - ls
 
   mock.briefing:
+    container_name: "mock.briefing"
     image: mock.briefing
     build:
       context: .
       dockerfile: Mock.Briefing/Dockerfile
     ports:
       - "8083:8080"
+    networks:
+      ls:
+        ipv4_address: 10.0.2.22
 
   mock.content.distribution:
+    container_name: "mock.content.distribution"
     image: mock.content.distribution
     build:
       context: .
@@ -56,7 +68,7 @@ services:
       - ls
   
   localstack:
-    container_name: "cds-localstack-docker"
+    container_name: "CDS.localstack"
     image: localstack/localstack
     ports:
       - "127.0.0.1:4566:4566"
@@ -72,6 +84,7 @@ services:
         ipv4_address: 10.0.2.20
         
   db:
+    container_name: "CDS.db"
     image: postgres:alpine
     restart: always
     environment:
@@ -81,10 +94,17 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - "./db-data:/var/lib/postgresql/data"
+      - "cds-db:/var/lib/postgresql/data"
+    networks:
+      ls:
+        ipv4_address: 10.0.2.21
 
 networks:
   ls:
     ipam:
       config:
         - subnet: 10.0.2.0/24
+          
+volumes:
+  cds-db:
+    driver: local

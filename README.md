@@ -98,3 +98,9 @@ The final solution can be summarized as:
 
 // Add container graph including future improvements
 
+## DB Migrations
+To create the migrations run:
+`dotnet ef migrations add CreateTables -p CDS.Infrastructure -s CDS.API`
+
+To apply the migrations run:
+`dotnet ef database update -p CDS.Infrastructure -s CDS.API --connection "Host=localhost:5432;Database=cds;Username=cds;Password=cds"`

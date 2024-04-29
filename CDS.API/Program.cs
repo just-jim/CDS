@@ -1,10 +1,12 @@
 using CDS.API.Controllers;
+using CDS.Application;
 using CDS.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
         .AddApi()
+        .AddApplication()
         .AddInfrastructure(builder.Configuration);
 }
 

@@ -10,7 +10,7 @@ namespace CDS.Infrastructure.SqsConsumers.Poller;
 public class SqsPoller(ILogger logger, IAmazonSQS sqs) {
     readonly List<string> _messageAttributeNames = ["All"];
 
-    public delegate void MessageHandling(IMessage? message);
+    public delegate void MessageHandling(IMessage message);
 
     public async Task Polling(string queue, Type objectType, MessageHandling callback, CancellationToken ct) {
 
@@ -34,10 +34,10 @@ public class SqsPoller(ILogger logger, IAmazonSQS sqs) {
                 try {
                     var messageObject = (IMessage?)JsonSerializer.Deserialize(message.Body, objectType, jsonSerializerOptions);
                     logger.LogInformation($"{queue} {messageObject?.Id()} consumed");
-                    callback(messageObject);
+                    callback(messageObject!);
                 }
-                catch (JsonException ex) {
-                    logger.LogWarning($"Consumed malformed message from {queue} sqs queue");
+                catch (JsonException e) {
+                    logger.LogError($"Consumed malformed message from {queue} sqs queue",e);
                     // Here we could forward the malformed message to a DLQ
                 }
 

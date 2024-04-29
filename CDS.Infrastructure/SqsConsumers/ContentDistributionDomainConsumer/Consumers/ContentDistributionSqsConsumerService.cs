@@ -21,8 +21,8 @@ public class ContentDistributionSqsConsumerService(ILogger<ContentDistributionSq
         return Task.CompletedTask;
     }
 
-    public void HandleMessage(IMessage? message) {
-        var contentDistribution = (ContentDistributionDomainContentDistribution?)message;
-        logger.LogInformation($"ContentDistributionSqsConsumerService received the content distribution for the date {contentDistribution?.DistributionDate}");
+    public void HandleMessage(IMessage message) {
+        var contentDistribution = (ContentDistributionDomainContentDistribution)message;
+        logger.LogInformation($"ContentDistributionSqsConsumerService received the content distribution for the date {contentDistribution.DistributionDate}");
     }
 }

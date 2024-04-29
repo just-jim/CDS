@@ -1,6 +1,6 @@
 # This is a generated file. Not intended for manual editing.
 services:
-  cds.api:
+  cds:
     build:
       context: "/Users/just_jim/Desktop/CDS"
       dockerfile: "CDS.API/Dockerfile"

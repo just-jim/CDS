@@ -7,13 +7,13 @@ namespace CDS.Domain.OrderAggregate;
 public class Order : AggregateRoot<OrderId, string> {
     public string OrderNumber { get; private set; }
     public string CustomerName { get; private set; }
-    public string OrderDate { get; private set; }
+    public DateOnly OrderDate { get; private set; }
     public int TotalAssets { get; private set; }
 
     Order(
         string orderNumber,
         string customerName,
-        string orderDate,
+        DateOnly orderDate,
         int totalAssets
     ) : base(OrderId.Create(orderNumber)) {
         OrderNumber = orderNumber;
@@ -25,7 +25,7 @@ public class Order : AggregateRoot<OrderId, string> {
     public static Order Create(
         string orderNumber, 
         string customerName, 
-        string orderDate, 
+        DateOnly orderDate, 
         int totalAssets
     ) {
         var order = new Order(orderNumber, customerName, orderDate, totalAssets);

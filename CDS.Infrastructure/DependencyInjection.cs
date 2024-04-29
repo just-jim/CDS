@@ -1,8 +1,13 @@
 using Amazon.Runtime;
 using Amazon.SQS;
+using CDS.Application.Common.Interfaces.Database;
+using CDS.Infrastructure.Database;
+using CDS.Infrastructure.Database.Interceptors;
+using CDS.Infrastructure.Database.Repositories;
 using CDS.Infrastructure.SqsConsumers.AssetDomainConsumer.Consumers;
 using CDS.Infrastructure.SqsConsumers.ContentDistributionDomainConsumer.Consumers;
 using CDS.Infrastructure.SqsConsumers.OrderDomainConsumer.Consumers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,9 +18,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
-        ConfigurationManager configuration)
-    {
+        ConfigurationManager configuration) {
         services
+            .AddDatabase(configuration)
             .AddSqsClient(configuration)
             .AddSqsConsumers();
         
@@ -49,6 +54,22 @@ public static class DependencyInjection
         services.AddHostedService<OrderSqsConsumerService>();
         services.AddHostedService<ContentDistributionSqsConsumerService>();
         
+        return services;
+    }
+    
+    static IServiceCollection AddDatabase(
+        this IServiceCollection services,
+        IConfiguration configuration
+    ) {
+        services.AddDbContext<CdsDbContext>(
+            options => options.UseNpgsql(configuration.GetConnectionString("Postgres")),
+            ServiceLifetime.Singleton,
+            ServiceLifetime.Singleton
+        );
+        
+        services.AddSingleton<PublishDomainEventsInterceptor>();
+        services.AddSingleton<IOrderRepository, OrderRepository>();
+
         return services;
     }
 }
