@@ -6,6 +6,10 @@ public sealed class ContentDistributionId : AggregateRootId<Guid> {
     ContentDistributionId(Guid value) : base(value) {
     }
 
+    public static ContentDistributionId Create(Guid value) {
+        return new ContentDistributionId(value);
+    }
+    
     public static ContentDistributionId CreateUnique() {
         return new ContentDistributionId(Guid.NewGuid());
     }

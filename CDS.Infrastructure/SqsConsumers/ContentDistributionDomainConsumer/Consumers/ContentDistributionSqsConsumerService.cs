@@ -1,13 +1,15 @@
 ﻿using Amazon.SQS;
+using CDS.Application.ContentDistributions.Commands.CreateContentDistribution;
 using CDS.Infrastructure.SqsConsumers.ContentDistributionDomainConsumer.Models.Sqs;
 using CDS.Infrastructure.SqsConsumers.Interfaces;
 using CDS.Infrastructure.SqsConsumers.Poller;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace CDS.Infrastructure.SqsConsumers.ContentDistributionDomainConsumer.Consumers;
 
-public class ContentDistributionSqsConsumerService(ILogger<ContentDistributionSqsConsumerService> logger, IAmazonSQS sqs, IConfiguration configuration) : ISqsConsumerService {
+public class ContentDistributionSqsConsumerService(ILogger<ContentDistributionSqsConsumerService> logger, IAmazonSQS sqs, IConfiguration configuration, ISender mediator) : ISqsConsumerService {
     public Type GetMessageObjectType() {
         return typeof(ContentDistributionDomainContentDistribution);
     }
@@ -21,8 +23,12 @@ public class ContentDistributionSqsConsumerService(ILogger<ContentDistributionSq
         return Task.CompletedTask;
     }
 
-    public void HandleMessage(IMessage message) {
+    public async void HandleMessage(IMessage message) {
         var contentDistribution = (ContentDistributionDomainContentDistribution)message;
         logger.LogInformation($"ContentDistributionSqsConsumerService received the content distribution for the date {contentDistribution.DistributionDate}");
+
+        var distributionDate = DateOnly.Parse(contentDistribution.DistributionDate);
+        var command = new CreateContentDistributionCommand(distributionDate,contentDistribution.DistributionChannel,contentDistribution.DistributionMethod);
+        await mediator.Send(command);
     }
 }

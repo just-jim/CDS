@@ -22,6 +22,29 @@ namespace CDS.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("CDS.Domain.ContentDistributionAggregate.ContentDistribution", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DistributionChannel")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateOnly>("DistributionDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("DistributionMethod")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContentDistributions", (string)null);
+                });
+
             modelBuilder.Entity("CDS.Domain.OrderAggregate.Order", b =>
                 {
                     b.Property<string>("Id")

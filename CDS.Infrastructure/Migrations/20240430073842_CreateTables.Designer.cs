@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CDS.Infrastructure.Migrations
 {
     [DbContext(typeof(CdsDbContext))]
-    [Migration("20240430072709_CreateTables")]
+    [Migration("20240430073842_CreateTables")]
     partial class CreateTables
     {
         /// <inheritdoc />
@@ -24,6 +24,29 @@ namespace CDS.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("CDS.Domain.ContentDistributionAggregate.ContentDistribution", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DistributionChannel")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateOnly>("DistributionDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("DistributionMethod")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContentDistributions", (string)null);
+                });
 
             modelBuilder.Entity("CDS.Domain.OrderAggregate.Order", b =>
                 {

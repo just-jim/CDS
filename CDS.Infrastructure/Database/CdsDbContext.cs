@@ -1,4 +1,5 @@
 using CDS.Domain.Common.Models;
+using CDS.Domain.ContentDistributionAggregate;
 using CDS.Domain.OrderAggregate;
 using CDS.Infrastructure.Database.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ public class CdsDbContext(
     ) : DbContext(options) {
     
     public DbSet<Order> Orders { get; set; } = null!;
+    public DbSet<ContentDistribution> ContentDistributions { get; set; } = null!;
     
     override protected void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder

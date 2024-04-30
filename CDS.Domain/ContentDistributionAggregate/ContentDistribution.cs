@@ -5,12 +5,12 @@ using CDS.Domain.ContentDistributionAggregate.ValueObjects;
 namespace CDS.Domain.ContentDistributionAggregate;
 
 public class ContentDistribution : AggregateRoot<ContentDistributionId, Guid> {
-    public DateTime DistributionDate { get; private set; }
+    public DateOnly DistributionDate { get; private set; }
     public string DistributionChannel { get; private set; }
     public string DistributionMethod { get; private set; }
 
     ContentDistribution(
-        DateTime distributionDate, 
+        DateOnly distributionDate, 
         string distributionChannel, 
         string distributionMethod
     ) : base(ContentDistributionId.CreateUnique()) {
@@ -20,7 +20,7 @@ public class ContentDistribution : AggregateRoot<ContentDistributionId, Guid> {
     }
 
     public static ContentDistribution Create(
-        DateTime distributionDate, 
+        DateOnly distributionDate, 
         string distributionChannel, 
         string distributionMethod
     ) {
