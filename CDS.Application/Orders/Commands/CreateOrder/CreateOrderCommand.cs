@@ -8,5 +8,11 @@ public record CreateOrderCommand(
     string OrderNumber,
     string CustomerName,
     DateOnly OrderDate,
-    int TotalAssets
+    int TotalAssets,
+    List<AssetOrderCommand> AssetOrders
 ) : IRequest<ErrorOr<Order>>;
+
+public record AssetOrderCommand(
+    string AssetId,
+    int Quantity
+);

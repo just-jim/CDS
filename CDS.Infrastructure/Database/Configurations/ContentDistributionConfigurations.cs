@@ -1,3 +1,4 @@
+using CDS.Domain.AssetAggregate.ValueObjects;
 using CDS.Domain.ContentDistributionAggregate;
 using CDS.Domain.ContentDistributionAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +9,11 @@ namespace CDS.Infrastructure.Database.Configurations;
 public class ContentDistributionConfigurations : IEntityTypeConfiguration<ContentDistribution> {
     
     public void Configure(EntityTypeBuilder<ContentDistribution> builder) {
-        ConfigureOrdersTable(builder);
+        ConfigureContentDistributionsTable(builder);
+        ConfigureAssetContentDistributionsTable(builder);
     }
 
-    static void ConfigureOrdersTable(EntityTypeBuilder<ContentDistribution> builder) {
+    static void ConfigureContentDistributionsTable(EntityTypeBuilder<ContentDistribution> builder) {
         builder.ToTable("ContentDistributions");
 
         builder.HasKey(cd => cd.Id);
@@ -30,5 +32,35 @@ public class ContentDistributionConfigurations : IEntityTypeConfiguration<Conten
 
         builder.Property(cd => cd.DistributionMethod)
             .HasMaxLength(100);
+    }
+    
+    static void ConfigureAssetContentDistributionsTable(EntityTypeBuilder<ContentDistribution> builder) {
+        builder.OwnsMany(cd => cd.AssetContentDistributions, acdb =>
+        {
+            acdb.ToTable("AssetContentDistributions");
+    
+            acdb.WithOwner().HasForeignKey("ContentDistributionId");
+
+            acdb.HasKey("Id", "ContentDistributionId");
+            
+            acdb.Property(acd => acd.Id)
+                .HasConversion(
+                    id => id.Value,
+                    value => AssetContentDistributionId.Create(value)
+                );
+            
+            acdb.Property(acd => acd.AssetId)
+                .ValueGeneratedNever()
+                .HasConversion(
+                    id => id.Value,
+                    value => AssetId.Create(value)
+                );
+
+            acdb.Property(acd => acd.FileUrl)
+                .HasMaxLength(200);
+        });
+        
+        builder.Metadata.FindNavigation(nameof(ContentDistribution.AssetContentDistributions))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

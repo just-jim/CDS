@@ -30,8 +30,11 @@ public class OrderSqsConsumerService(ILogger<OrderSqsConsumerService> logger, IA
         logger.LogInformation($"OrderSqsConsumerService received the order {order.OrderNumber}");
         
         var orderDate = DateOnly.Parse(order.OrderDate);
-        var command = new CreateOrderCommand(order.OrderNumber,order.CustomerName,orderDate,order.TotalAssets);
-        
+        List<AssetOrderCommand> assetOrderCommands = 
+            order.Assets.ConvertAll(assetOrder => 
+                new AssetOrderCommand(assetOrder.AssetId,assetOrder.Quantity)
+            );
+        var command = new CreateOrderCommand(order.OrderNumber,order.CustomerName,orderDate,order.TotalAssets,assetOrderCommands);
         ErrorOr<Order> createdOrder = await mediator.Send(command);
         if (createdOrder.IsError) {
             logger.LogInformation($"Order {order.OrderNumber} failed to be created. Reason: {createdOrder.FirstError.Description}");

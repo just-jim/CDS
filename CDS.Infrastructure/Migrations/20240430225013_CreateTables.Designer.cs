@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CDS.Infrastructure.Migrations
 {
     [DbContext(typeof(CdsDbContext))]
-    [Migration("20240430184911_CreateTables")]
+    [Migration("20240430225013_CreateTables")]
     partial class CreateTables
     {
         /// <inheritdoc />
@@ -110,57 +110,6 @@ namespace CDS.Infrastructure.Migrations
 
             modelBuilder.Entity("CDS.Domain.AssetAggregate.Asset", b =>
                 {
-                    b.OwnsMany("CDS.Domain.AssetAggregate.Entities.AssetContentDistribution", "AssetContentDistributions", b1 =>
-                        {
-                            b1.Property<Guid>("Id")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("AssetId")
-                                .HasColumnType("text");
-
-                            b1.Property<Guid>("ContentDistributionId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("FileUrl")
-                                .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)");
-
-                            b1.HasKey("Id", "AssetId");
-
-                            b1.HasIndex("AssetId");
-
-                            b1.ToTable("AssetContentDistributions", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("AssetId");
-                        });
-
-                    b.OwnsMany("CDS.Domain.AssetAggregate.Entities.AssetOrder", "AssetOrders", b1 =>
-                        {
-                            b1.Property<Guid>("Id")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("AssetId")
-                                .HasColumnType("text");
-
-                            b1.Property<string>("OrderId")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.Property<int>("Quantity")
-                                .HasColumnType("integer");
-
-                            b1.HasKey("Id", "AssetId");
-
-                            b1.HasIndex("AssetId");
-
-                            b1.ToTable("AssetOrders", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("AssetId");
-                        });
-
                     b.OwnsOne("CDS.Domain.AssetAggregate.Entities.Briefing", "Briefing", b1 =>
                         {
                             b1.Property<Guid>("Id")
@@ -170,11 +119,10 @@ namespace CDS.Infrastructure.Migrations
                                 .HasColumnType("text");
 
                             b1.Property<string>("CreatedBy")
-                                .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)");
 
-                            b1.Property<DateOnly>("CreatedDate")
+                            b1.Property<DateOnly?>("CreatedDate")
                                 .HasColumnType("date");
 
                             b1.HasKey("Id", "AssetId");
@@ -188,11 +136,70 @@ namespace CDS.Infrastructure.Migrations
                                 .HasForeignKey("AssetId");
                         });
 
+                    b.Navigation("Briefing")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CDS.Domain.ContentDistributionAggregate.ContentDistribution", b =>
+                {
+                    b.OwnsMany("CDS.Domain.ContentDistributionAggregate.Entities.AssetContentDistribution", "AssetContentDistributions", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("ContentDistributionId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("AssetId")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("FileUrl")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)");
+
+                            b1.HasKey("Id", "ContentDistributionId");
+
+                            b1.HasIndex("ContentDistributionId");
+
+                            b1.ToTable("AssetContentDistributions", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ContentDistributionId");
+                        });
+
                     b.Navigation("AssetContentDistributions");
+                });
+
+            modelBuilder.Entity("CDS.Domain.OrderAggregate.Order", b =>
+                {
+                    b.OwnsMany("CDS.Domain.OrderAggregate.Entities.AssetOrder", "AssetOrders", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("OrderId")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("AssetId")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<int>("Quantity")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("Id", "OrderId");
+
+                            b1.HasIndex("OrderId");
+
+                            b1.ToTable("AssetOrders", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
 
                     b.Navigation("AssetOrders");
-
-                    b.Navigation("Briefing");
                 });
 #pragma warning restore 612, 618
         }

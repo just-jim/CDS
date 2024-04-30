@@ -59,6 +59,7 @@ internal class OrderController {
         foreach (var asset in assetsToRemove) {
             order.Assets.Remove(asset);
         }
+        order.TotalAssets = order.Assets.Count;
 
         return order;
     }

@@ -1,5 +1,4 @@
 using CDS.Domain.AssetAggregate;
-using CDS.Domain.AssetAggregate.Entities;
 using ErrorOr;
 using MediatR;
 
@@ -11,23 +10,11 @@ public record CreateAssetCommand(
     string Description,
     string FileFormat,
     string FileSize,
-    string Path
+    string Path,
+    BriefingCommand Briefing
 ) : IRequest<ErrorOr<Asset>>;
 
-public record CreateBriefingCommand(
-    string AssetId,
-    string Name,
-    string Description
-): IRequest<ErrorOr<Briefing>>;
-
-public record CreateAssetOrderCommand(
-    string AssetId,
-    string OrderNumber,
-    int Quantity
-): IRequest<ErrorOr<AssetOrder>>;
-    
-public record CreateAssetContentDistributionCommand(
-    string AssetId,
-    Guid ContentDistributionId,
-    string FileUrl
-): IRequest<ErrorOr<AssetContentDistribution>>;
+public record BriefingCommand(
+    string? CreatedBy,
+    DateOnly? CreatedDate
+);

@@ -1,6 +1,6 @@
 using CDS.Domain.Common.Models.identities;
 
-namespace CDS.Domain.AssetAggregate.ValueObjects;
+namespace CDS.Domain.OrderAggregate.ValueObjects;
 
 public sealed class AssetOrderId : EntityId<Guid> {
     AssetOrderId(Guid value) : base(value) {

@@ -57,53 +57,13 @@ namespace CDS.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AssetContentDistributions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    AssetId = table.Column<string>(type: "text", nullable: false),
-                    ContentDistributionId = table.Column<Guid>(type: "uuid", nullable: false),
-                    FileUrl = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AssetContentDistributions", x => new { x.Id, x.AssetId });
-                    table.ForeignKey(
-                        name: "FK_AssetContentDistributions_Assets_AssetId",
-                        column: x => x.AssetId,
-                        principalTable: "Assets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AssetOrders",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    AssetId = table.Column<string>(type: "text", nullable: false),
-                    OrderId = table.Column<string>(type: "text", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AssetOrders", x => new { x.Id, x.AssetId });
-                    table.ForeignKey(
-                        name: "FK_AssetOrders_Assets_AssetId",
-                        column: x => x.AssetId,
-                        principalTable: "Assets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Briefings",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     AssetId = table.Column<string>(type: "text", nullable: false),
-                    CreatedBy = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    CreatedDate = table.Column<DateOnly>(type: "date", nullable: false)
+                    CreatedBy = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    CreatedDate = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -116,15 +76,55 @@ namespace CDS.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AssetContentDistributions_AssetId",
-                table: "AssetContentDistributions",
-                column: "AssetId");
+            migrationBuilder.CreateTable(
+                name: "AssetContentDistributions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ContentDistributionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AssetId = table.Column<string>(type: "text", nullable: false),
+                    FileUrl = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetContentDistributions", x => new { x.Id, x.ContentDistributionId });
+                    table.ForeignKey(
+                        name: "FK_AssetContentDistributions_ContentDistributions_ContentDistr~",
+                        column: x => x.ContentDistributionId,
+                        principalTable: "ContentDistributions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetOrders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrderId = table.Column<string>(type: "text", nullable: false),
+                    AssetId = table.Column<string>(type: "text", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetOrders", x => new { x.Id, x.OrderId });
+                    table.ForeignKey(
+                        name: "FK_AssetOrders_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AssetOrders_AssetId",
+                name: "IX_AssetContentDistributions_ContentDistributionId",
+                table: "AssetContentDistributions",
+                column: "ContentDistributionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetOrders_OrderId",
                 table: "AssetOrders",
-                column: "AssetId");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Briefings_AssetId",

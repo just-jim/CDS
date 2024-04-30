@@ -1,6 +1,6 @@
 using CDS.Domain.Common.Models.identities;
 
-namespace CDS.Domain.AssetAggregate.ValueObjects;
+namespace CDS.Domain.ContentDistributionAggregate.ValueObjects;
 
 public sealed class AssetContentDistributionId : EntityId<Guid> {
     AssetContentDistributionId(Guid value) : base(value) {

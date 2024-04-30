@@ -28,7 +28,11 @@ public class ContentDistributionSqsConsumerService(ILogger<ContentDistributionSq
         logger.LogInformation($"ContentDistributionSqsConsumerService received the content distribution for the date {contentDistribution.DistributionDate}");
 
         var distributionDate = DateOnly.Parse(contentDistribution.DistributionDate);
-        var command = new CreateContentDistributionCommand(distributionDate,contentDistribution.DistributionChannel,contentDistribution.DistributionMethod);
+        List<AssetContentDistributionCommand> assetContentDistributionCommands = 
+            contentDistribution.Assets.ConvertAll(assetContentDistribution => 
+                new AssetContentDistributionCommand(assetContentDistribution.AssetId,assetContentDistribution.FileURL)
+            );
+        var command = new CreateContentDistributionCommand(distributionDate,contentDistribution.DistributionChannel,contentDistribution.DistributionMethod,assetContentDistributionCommands);
         await mediator.Send(command);
     }
 }

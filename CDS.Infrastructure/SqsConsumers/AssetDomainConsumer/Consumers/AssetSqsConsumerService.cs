@@ -27,7 +27,8 @@ public class AssetSqsConsumerService(ILogger<AssetSqsConsumerService> logger, IA
         var asset = (AssetDomainAsset)message;
         
         logger.LogInformation($"AssetSqsConsumerService received the asset {asset.AssetId}");
-        var command = new CreateAssetCommand(asset.AssetId,asset.Name,asset.Description,asset.FileFormat,asset.FileSize,asset.Path);
+        var briefingCommand = new BriefingCommand(null, null);
+        var command = new CreateAssetCommand(asset.AssetId,asset.Name,asset.Description,asset.FileFormat,asset.FileSize,asset.Path,briefingCommand);
         await mediator.Send(command);
     }
 }

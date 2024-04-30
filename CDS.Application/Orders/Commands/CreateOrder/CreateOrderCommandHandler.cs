@@ -1,6 +1,8 @@
 using CDS.Application.Common.Interfaces.Database;
+using CDS.Domain.AssetAggregate.ValueObjects;
 using CDS.Domain.Common.DomainErrors;
 using CDS.Domain.OrderAggregate;
+using CDS.Domain.OrderAggregate.Entities;
 using CDS.Domain.OrderAggregate.ValueObjects;
 using ErrorOr;
 using MediatR;
@@ -18,7 +20,12 @@ public class CreateOrderCommandHandler(IOrderRepository orderRepository) : IRequ
             orderNumber: request.OrderNumber,
             customerName: request.CustomerName,
             orderDate: request.OrderDate,
-            totalAssets: request.TotalAssets
+            totalAssets: request.TotalAssets,
+            assetOrders: request.AssetOrders.ConvertAll(assetOrder => AssetOrder.Create(
+                    AssetId.Create(assetOrder.AssetId),
+                    assetOrder.Quantity
+                )
+            )
         );
         
         await orderRepository.AddAsync(order);
