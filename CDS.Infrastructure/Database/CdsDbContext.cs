@@ -1,3 +1,4 @@
+using CDS.Domain.AssetAggregate;
 using CDS.Domain.Common.Models;
 using CDS.Domain.ContentDistributionAggregate;
 using CDS.Domain.OrderAggregate;
@@ -11,6 +12,7 @@ public class CdsDbContext(
     PublishDomainEventsInterceptor publishDomainEventsInterceptor
     ) : DbContext(options) {
     
+    public DbSet<Asset> Assets { get; set; } = null!;
     public DbSet<Order> Orders { get; set; } = null!;
     public DbSet<ContentDistribution> ContentDistributions { get; set; } = null!;
     

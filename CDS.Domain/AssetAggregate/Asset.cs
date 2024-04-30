@@ -38,7 +38,7 @@ public class Asset : AggregateRoot<AssetId, string> {
     }
 
     public static Asset Create(
-        string assetId,
+        AssetId assetId,
         string name,
         string description,
         string fileFormat,
@@ -46,7 +46,7 @@ public class Asset : AggregateRoot<AssetId, string> {
         string path
     ) {
         var asset = new Asset(
-            AssetId.Create(assetId),
+            assetId,
             name,
             description,
             fileFormat,
@@ -68,4 +68,8 @@ public class Asset : AggregateRoot<AssetId, string> {
     public void AddAssetContentDistribution(AssetContentDistribution assetContentDistribution) {
         _assetContentDistributions.Add(assetContentDistribution);
     }
+    
+#pragma warning disable CS8618
+    Asset() { }
+#pragma warning restore CS8618
 }

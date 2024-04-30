@@ -68,6 +68,7 @@ public static class DependencyInjection
         );
         
         services.AddSingleton<PublishDomainEventsInterceptor>();
+        services.AddSingleton<IAssetRepository, AssetRepository>();
         services.AddSingleton<IOrderRepository, OrderRepository>();
         services.AddSingleton<IContentDistributionRepository, ContentDistributionRepository>();
 

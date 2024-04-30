@@ -5,6 +5,10 @@ namespace CDS.Domain.AssetAggregate.ValueObjects;
 public sealed class AssetContentDistributionId : EntityId<Guid> {
     AssetContentDistributionId(Guid value) : base(value) {
     }
+    
+    public static AssetContentDistributionId Create(Guid value) {
+        return new AssetContentDistributionId(value);
+    }
 
     public static AssetContentDistributionId CreateUnique() {
         return new AssetContentDistributionId(Guid.NewGuid());

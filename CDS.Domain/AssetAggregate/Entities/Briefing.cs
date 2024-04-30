@@ -5,15 +5,15 @@ namespace CDS.Domain.AssetAggregate.Entities;
 
 public sealed class Briefing : Entity<BriefingId> {
     public string CreatedBy { get; private set; }
-    public string CreatedDate { get; private set; }
+    public DateOnly CreatedDate { get; private set; }
 
-    Briefing(string createdBy, string createdDate)
+    Briefing(string createdBy, DateOnly createdDate)
         : base(BriefingId.CreateUnique()) {
         CreatedBy = createdBy;
         CreatedDate = createdDate;
     }
 
-    public static Briefing Create(string createdBy, string createdDate) {
+    public static Briefing Create(string createdBy, DateOnly createdDate) {
         return new Briefing(createdBy, createdDate);
     }
 }
