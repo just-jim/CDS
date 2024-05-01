@@ -1,15 +1,16 @@
 ﻿using Amazon.SQS;
+using CDS.Application.Common.Interfaces.Consumers;
+using CDS.Application.Common.Interfaces.Models;
+using CDS.Application.Common.Models;
 using CDS.Application.Orders.Commands.CreateOrder;
 using CDS.Domain.OrderAggregate;
-using CDS.Infrastructure.SqsConsumers.Interfaces;
-using CDS.Infrastructure.SqsConsumers.OrderDomainConsumer.Models.Sqs;
 using CDS.Infrastructure.SqsConsumers.Poller;
 using ErrorOr;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace CDS.Infrastructure.SqsConsumers.OrderDomainConsumer.Consumers;
+namespace CDS.Infrastructure.SqsConsumers;
 
 public class OrderSqsConsumerService(ILogger<OrderSqsConsumerService> logger, IAmazonSQS sqs, IConfiguration configuration, ISender mediator) : ISqsConsumerService {
     public Type GetMessageObjectType() {
@@ -27,7 +28,7 @@ public class OrderSqsConsumerService(ILogger<OrderSqsConsumerService> logger, IA
 
     public async void HandleMessage(IMessage message) {
         var order = (OrderDomainOrder)message;
-        logger.LogInformation($"OrderSqsConsumerService received the order {order.OrderNumber}");
+        logger.LogInformation($"Order with {order.OrderNumber} consumed");
         
         var orderDate = DateOnly.Parse(order.OrderDate);
         List<AssetOrderCommand> assetOrderCommands = 

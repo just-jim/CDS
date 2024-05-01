@@ -1,13 +1,14 @@
 ﻿using Amazon.SQS;
-using CDS.Infrastructure.SqsConsumers.AssetDomainConsumer.Models.Sqs;
-using CDS.Infrastructure.SqsConsumers.Interfaces;
+using CDS.Application.Assets.Commands.CreateAsset;
+using CDS.Application.Common.Interfaces.Consumers;
+using CDS.Application.Common.Interfaces.Models;
+using CDS.Application.Common.Models;
 using CDS.Infrastructure.SqsConsumers.Poller;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using CDS.Application.Assets.Commands.CreateAsset;
 
-namespace CDS.Infrastructure.SqsConsumers.AssetDomainConsumer.Consumers;
+namespace CDS.Infrastructure.SqsConsumers;
 
 public class AssetSqsConsumerService(ILogger<AssetSqsConsumerService> logger, IAmazonSQS sqs, IConfiguration configuration, ISender mediator) : ISqsConsumerService {
     public Type GetMessageObjectType() {
@@ -26,7 +27,7 @@ public class AssetSqsConsumerService(ILogger<AssetSqsConsumerService> logger, IA
     public async void HandleMessage(IMessage message) {
         var asset = (AssetDomainAsset)message;
         
-        logger.LogInformation($"AssetSqsConsumerService received the asset {asset.AssetId}");
+        logger.LogInformation($"Asset with id {asset.AssetId} consumed");
         var briefingCommand = new BriefingCommand(null, null);
         var command = new CreateAssetCommand(asset.AssetId,asset.Name,asset.Description,asset.FileFormat,asset.FileSize,asset.Path,briefingCommand);
         await mediator.Send(command);

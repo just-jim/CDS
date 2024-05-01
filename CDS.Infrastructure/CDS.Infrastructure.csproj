@@ -18,10 +18,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="SqsConsumers\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\CDS.Application\CDS.Application.csproj" />
       <ProjectReference Include="..\CDS.Domain\CDS.Domain.csproj" />
     </ItemGroup>

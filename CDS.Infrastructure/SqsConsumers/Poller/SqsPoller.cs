@@ -2,7 +2,7 @@ using System.Net;
 using System.Text.Json;
 using Amazon.SQS;
 using Amazon.SQS.Model;
-using CDS.Infrastructure.SqsConsumers.Interfaces;
+using CDS.Application.Common.Interfaces.Models;
 using Microsoft.Extensions.Logging;
 
 namespace CDS.Infrastructure.SqsConsumers.Poller;

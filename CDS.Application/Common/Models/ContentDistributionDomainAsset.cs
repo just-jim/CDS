@@ -1,4 +1,4 @@
-﻿namespace CDS.Infrastructure.SqsConsumers.ContentDistributionDomainConsumer.Models.Sqs;
+﻿namespace CDS.Application.Common.Models;
 
 public class ContentDistributionDomainAsset {
     public string AssetId { get; set; }

@@ -1,5 +1,5 @@
 using System.Reflection;
-using BuberDinner.Application.Common.Behaviors;
+using CDS.Application.Common.Behaviors;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
