@@ -2,7 +2,10 @@ services:
   cds:
     container_name: "CDS"
     depends_on:
-      - "db"
+      db:
+        condition: service_started
+      localstack:
+        condition: service_healthy
     image: cds.api
     build:
       context: .

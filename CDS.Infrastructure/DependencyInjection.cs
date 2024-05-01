@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Events;
 
 namespace CDS.Infrastructure;
 
@@ -18,11 +20,14 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
-        ConfigurationManager configuration) {
+        ConfigurationManager configuration,
+        IHostBuilder host
+        ) {
         services
             .AddDatabase(configuration)
             .AddSqsClient(configuration)
-            .AddSqsConsumers();
+            .AddSqsConsumers()
+            .AddLogger(host);
         
         return services;
     }
@@ -72,6 +77,21 @@ public static class DependencyInjection
         services.AddSingleton<IOrderRepository, OrderRepository>();
         services.AddSingleton<IContentDistributionRepository, ContentDistributionRepository>();
 
+        return services;
+    }
+
+    static IServiceCollection AddLogger(
+        this IServiceCollection services,
+        IHostBuilder host
+    ) {
+        host.UseSerilog((context, configuration) => configuration
+            .ReadFrom.Configuration(context.Configuration)
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+            .Filter.ByExcluding(c => c.Exception is TaskCanceledException)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+        );
+        
         return services;
     }
 }
