@@ -10,11 +10,5 @@ public record CreateAssetCommand(
     string Description,
     string FileFormat,
     string FileSize,
-    string Path,
-    BriefingCommand Briefing
+    string Path
 ) : IRequest<ErrorOr<Asset>>;
-
-public record BriefingCommand(
-    string? CreatedBy,
-    DateOnly? CreatedDate
-);

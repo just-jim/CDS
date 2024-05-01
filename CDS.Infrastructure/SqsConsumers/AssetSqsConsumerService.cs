@@ -27,9 +27,8 @@ public class AssetSqsConsumerService(ILogger<AssetSqsConsumerService> logger, IA
     public async void HandleMessage(IMessage message) {
         var asset = (AssetDomainAsset)message;
         
-        logger.LogInformation($"Asset with id {asset.AssetId} consumed");
-        var briefingCommand = new BriefingCommand(null, null);
-        var command = new CreateAssetCommand(asset.AssetId,asset.Name,asset.Description,asset.FileFormat,asset.FileSize,asset.Path,briefingCommand);
+        logger.LogInformation($"consumed Asset with id '{asset.AssetId}'");
+        var command = new CreateAssetCommand(asset.AssetId,asset.Name,asset.Description,asset.FileFormat,asset.FileSize,asset.Path);
         await mediator.Send(command);
     }
 }

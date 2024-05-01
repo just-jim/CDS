@@ -28,7 +28,7 @@ public class OrderSqsConsumerService(ILogger<OrderSqsConsumerService> logger, IA
 
     public async void HandleMessage(IMessage message) {
         var order = (OrderDomainOrder)message;
-        logger.LogInformation($"Order with {order.OrderNumber} consumed");
+        logger.LogInformation($"consumed Order with number '{order.OrderNumber}'");
         
         var orderDate = DateOnly.Parse(order.OrderDate);
         List<AssetOrderCommand> assetOrderCommands = 

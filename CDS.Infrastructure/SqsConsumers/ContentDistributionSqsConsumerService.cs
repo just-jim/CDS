@@ -26,7 +26,7 @@ public class ContentDistributionSqsConsumerService(ILogger<ContentDistributionSq
 
     public async void HandleMessage(IMessage message) {
         var contentDistribution = (ContentDistributionDomainContentDistribution)message;
-        logger.LogInformation($"Content distribution for the date {contentDistribution.DistributionDate} was consumed");
+        logger.LogInformation($"consumed Content distribution for the date '{contentDistribution.DistributionDate}'");
 
         var distributionDate = DateOnly.Parse(contentDistribution.DistributionDate);
         List<AssetContentDistributionCommand> assetContentDistributionCommands = 

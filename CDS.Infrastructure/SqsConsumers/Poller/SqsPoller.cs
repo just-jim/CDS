@@ -33,7 +33,6 @@ public class SqsPoller(ILogger logger, IAmazonSQS sqs) {
             foreach (var message in messageResponse.Messages) {
                 try {
                     var messageObject = (IMessage?)JsonSerializer.Deserialize(message.Body, objectType, jsonSerializerOptions);
-                    logger.LogInformation($"{queue} {messageObject?.Id()} consumed");
                     callback(messageObject!);
                 }
                 catch (JsonException e) {

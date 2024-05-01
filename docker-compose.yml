@@ -11,13 +11,11 @@ services:
       context: .
       dockerfile: CDS.API/Dockerfile
     environment:
-      - "ConnectionStrings__Postgres=Host=10.0.2.21:5432;Database=cds;Username=cds;Password=cds"
+      - "ConnectionStrings__LocalStack=http://localstack:4566"
+      - "ConnectionStrings__Postgres=Host=db:5432;Database=cds;Username=cds;Password=cds"
+      - "ConnectionStrings__BriefingDomain=http://mock.briefing:8080"
     ports:
       - "8080:8080"
-    dns:
-      - 10.0.2.20
-    networks:
-      - ls
 
   mock.asset:
     container_name: "mock.asset"
@@ -25,12 +23,10 @@ services:
     build:
       context: .
       dockerfile: Mock.Asset/Dockerfile
+    environment:
+      - "ConnectionStrings__LocalStack=http://localstack:4566"
     ports:
       - "8081:8080"
-    dns:
-      - 10.0.2.20
-    networks:
-      - ls
 
   mock.order:
     container_name: "mock.order"
@@ -38,12 +34,10 @@ services:
     build:
       context: .
       dockerfile: Mock.Order/Dockerfile
+    environment:
+      - "ConnectionStrings__LocalStack=http://localstack:4566"
     ports:
       - "8082:8080"
-    dns:
-      - 10.0.2.20
-    networks:
-      - ls
 
   mock.briefing:
     container_name: "mock.briefing"
@@ -53,9 +47,6 @@ services:
       dockerfile: Mock.Briefing/Dockerfile
     ports:
       - "8083:8080"
-    networks:
-      ls:
-        ipv4_address: 10.0.2.22
 
   mock.content.distribution:
     container_name: "mock.content.distribution"
@@ -63,28 +54,21 @@ services:
     build:
       context: .
       dockerfile: Mock.Content.Distribution/Dockerfile
+    environment:
+      - "ConnectionStrings__LocalStack=http://localstack:4566"
     ports:
       - "8084:8080"
-    dns:
-      - 10.0.2.20
-    networks:
-      - ls
   
   localstack:
     container_name: "CDS.localstack"
     image: localstack/localstack
     ports:
-      - "127.0.0.1:4566:4566"
-      - "127.0.0.1:4510-4559:4510-4559"
-    environment:
-      - DEBUG=${DEBUG:-0}
+      - "4566:4566"
+      - "4510-4559:4510-4559"
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./bootstrap/localstack:/etc/localstack/init/ready.d"
-    networks:
-      ls:
-        ipv4_address: 10.0.2.20
         
   db:
     container_name: "CDS.db"
@@ -98,16 +82,7 @@ services:
       - '5432:5432'
     volumes:
       - "cds-db:/var/lib/postgresql/data"
-    networks:
-      ls:
-        ipv4_address: 10.0.2.21
-
-networks:
-  ls:
-    ipam:
-      config:
-        - subnet: 10.0.2.0/24
-          
+    
 volumes:
   cds-db:
     driver: local

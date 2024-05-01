@@ -1,6 +1,8 @@
 using Amazon.Runtime;
 using Amazon.SQS;
+using CDS.Application.Common.Interfaces.Clients;
 using CDS.Application.Common.Interfaces.Database;
+using CDS.Infrastructure.Clients;
 using CDS.Infrastructure.Database;
 using CDS.Infrastructure.Database.Interceptors;
 using CDS.Infrastructure.Database.Repositories;
@@ -25,6 +27,7 @@ public static class DependencyInjection
             .AddDatabase(configuration)
             .AddSqsClient(configuration)
             .AddSqsConsumers()
+            .AddQueryServices()
             .AddLogger(host);
         
         return services;
@@ -89,6 +92,14 @@ public static class DependencyInjection
             .Enrich.FromLogContext()
             .WriteTo.Console()
         );
+        
+        return services;
+    }
+    
+    static IServiceCollection AddQueryServices(
+        this IServiceCollection services
+    ) {
+        services.AddHttpClient<IQueryService, BriefingQueryService>();
         
         return services;
     }
