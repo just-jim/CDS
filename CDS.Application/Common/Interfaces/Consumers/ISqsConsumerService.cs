@@ -1,4 +1,3 @@
-using CDS.Application.Common.Interfaces.Models;
 using Microsoft.Extensions.Hosting;
 
 namespace CDS.Application.Common.Interfaces.Consumers;

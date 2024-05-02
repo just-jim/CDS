@@ -1,7 +1,6 @@
 ﻿using Amazon.SQS;
 using CDS.Application.Assets.Commands.CreateAsset;
 using CDS.Application.Common.Interfaces.Consumers;
-using CDS.Application.Common.Interfaces.Models;
 using CDS.Application.Common.Models;
 using CDS.Infrastructure.SqsConsumers.Poller;
 using MediatR;

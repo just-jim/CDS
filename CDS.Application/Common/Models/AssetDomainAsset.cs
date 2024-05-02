@@ -1,4 +1,4 @@
-﻿using CDS.Application.Common.Interfaces.Models;
+﻿using CDS.Application.Common.Interfaces.Consumers;
 
 namespace CDS.Application.Common.Models;
 

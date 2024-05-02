@@ -1,6 +1,5 @@
 ﻿using Amazon.SQS;
 using CDS.Application.Common.Interfaces.Consumers;
-using CDS.Application.Common.Interfaces.Models;
 using CDS.Application.Common.Models;
 using CDS.Application.Orders.Commands.CreateOrder;
 using CDS.Domain.OrderAggregate;

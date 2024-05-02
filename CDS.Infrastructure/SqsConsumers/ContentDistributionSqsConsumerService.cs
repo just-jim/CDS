@@ -1,6 +1,5 @@
 ﻿using Amazon.SQS;
 using CDS.Application.Common.Interfaces.Consumers;
-using CDS.Application.Common.Interfaces.Models;
 using CDS.Application.Common.Models;
 using CDS.Application.ContentDistributions.Commands.CreateContentDistribution;
 using CDS.Infrastructure.SqsConsumers.Poller;

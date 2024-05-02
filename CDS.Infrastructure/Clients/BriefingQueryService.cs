@@ -1,6 +1,5 @@
 using System.Text.Json;
 using CDS.Application.Common.Interfaces.Clients;
-using CDS.Application.Common.Interfaces.Models;
 using CDS.Application.Common.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -12,7 +11,7 @@ public class BriefingQueryService(HttpClient httpClient, IConfiguration configur
     readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     readonly string? _baseUrl = configuration.GetConnectionString("BriefingDomain");
 
-    public async Task<IMessage?> FetchDataAsync(string briefingName) {
+    public async Task<IQueryResponse?> FetchDataAsync(string briefingName) {
         string url = $"{_baseUrl}/briefings/{briefingName}";
         var response = await httpClient.GetAsync(url);
         if (!response.IsSuccessStatusCode) {
