@@ -1,18 +1,24 @@
 using Amazon.Runtime;
 using Amazon.SQS;
+using CDS.Application.Common.Interfaces.Cache;
 using CDS.Application.Common.Interfaces.Clients;
 using CDS.Application.Common.Interfaces.Database;
+using CDS.Infrastructure.Cache;
 using CDS.Infrastructure.Clients;
 using CDS.Infrastructure.Database;
 using CDS.Infrastructure.Database.Interceptors;
 using CDS.Infrastructure.Database.Repositories;
 using CDS.Infrastructure.SqsConsumers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Events;
+using StackExchange.Redis;
 
 namespace CDS.Infrastructure;
 
@@ -27,6 +33,7 @@ public static class DependencyInjection
             .AddDatabase(configuration)
             .AddSqsClient(configuration)
             .AddSqsConsumers()
+            .AddCaching(configuration)
             .AddQueryServices()
             .AddLogger(host);
         
@@ -100,6 +107,22 @@ public static class DependencyInjection
         this IServiceCollection services
     ) {
         services.AddHttpClient<IQueryService, BriefingQueryService>();
+        
+        return services;
+    }
+    
+    static IServiceCollection AddCaching(
+        this IServiceCollection services,
+        IConfiguration configuration
+    ) {
+        var redisOptions = new RedisCacheOptions {
+            ConfigurationOptions = new ConfigurationOptions()
+        };
+        redisOptions.ConfigurationOptions.EndPoints.Add(configuration.GetConnectionString("Redis")!);
+        IOptions<RedisCacheOptions> opts = Options.Create(redisOptions);
+
+        services.AddSingleton<IDistributedCache>(_ => new RedisCache(opts));
+        services.AddSingleton<ICacheService, RedisCacheService>();
         
         return services;
     }
