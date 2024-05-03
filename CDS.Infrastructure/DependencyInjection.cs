@@ -63,9 +63,9 @@ public static class DependencyInjection
         });
         
         // Add the sqs consumers to consume messages from the external domains
-        services.AddHostedService<AssetSqsConsumerService>();
-        services.AddHostedService<OrderSqsConsumerService>();
-        services.AddHostedService<ContentDistributionSqsConsumerService>();
+        services.AddHostedService(provider => new AssetSqsConsumerService(provider.CreateScope().ServiceProvider));
+        services.AddHostedService(provider => new OrderSqsConsumerService(provider.CreateScope().ServiceProvider));
+        services.AddHostedService(provider => new ContentDistributionSqsConsumerService(provider.CreateScope().ServiceProvider));
         
         return services;
     }
@@ -75,15 +75,13 @@ public static class DependencyInjection
         IConfiguration configuration
     ) {
         services.AddDbContext<CdsDbContext>(
-            options => options.UseNpgsql(configuration.GetConnectionString("Postgres")),
-            ServiceLifetime.Singleton,
-            ServiceLifetime.Singleton
+            options => options.UseNpgsql(configuration.GetConnectionString("Postgres"))
         );
         
-        services.AddSingleton<PublishDomainEventsInterceptor>();
-        services.AddSingleton<IAssetRepository, AssetRepository>();
-        services.AddSingleton<IOrderRepository, OrderRepository>();
-        services.AddSingleton<IContentDistributionRepository, ContentDistributionRepository>();
+        services.AddScoped<PublishDomainEventsInterceptor>();
+        services.AddScoped<IAssetRepository, AssetRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IContentDistributionRepository, ContentDistributionRepository>();
 
         return services;
     }
