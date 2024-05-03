@@ -27,10 +27,10 @@ public class AssetsController(ISender mediator) : ApiController
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAsset(string id)
     {
-        ErrorOr<string> listAssetsResult = await mediator.Send(new GetAssetQuery(id));
+        ErrorOr<string> assetFileUrl = await mediator.Send(new GetAssetQuery(id));
 
-        return listAssetsResult.Match(
-            Ok,
+        return assetFileUrl.Match(
+            Redirect,
             Problem
         );
     }
