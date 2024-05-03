@@ -10,8 +10,8 @@ public class RedisCacheService(IDistributedCache cache, ILogger<RedisCacheServic
         PropertyNameCaseInsensitive = true
     };
     
-    public void Set(string key, ICacheable cacheable) {
-        string json = JsonSerializer.Serialize(cacheable, JsonSerializerOptions);
+    public void Set(string key, ICacheable cacheable, Type cacheableType) {
+        string json = JsonSerializer.Serialize(cacheable, cacheableType, JsonSerializerOptions);
         cache.SetString(key, json);
     }
         

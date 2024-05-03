@@ -38,7 +38,7 @@ public class CreateContentDistributionCommandHandler(
             
             if (currentCachedUrl.IsMissing() || currentCachedUrl.IsOutdated(contentDistribution.DistributionDate)) {
                 logger.LogInformation($"Caching the fileUrl for the asset {asset.AssetId.Value}");
-                cache.Set(asset.AssetId.Value, new AssetFileUrlCache(asset.FileUrl, contentDistribution.DistributionDate));
+                cache.Set(asset.AssetId.Value, new AssetFileUrlCache(asset.FileUrl, contentDistribution.DistributionDate), typeof(AssetFileUrlCache));
             } else {
                 string formatedDistributionDate = currentCachedUrl!.DistributionDate.ToString("yyyy-MM-dd");
                 logger.LogInformation($"A more recent version ({formatedDistributionDate}) of the content distribution url is already cached for the asset {asset.AssetId.Value}");
