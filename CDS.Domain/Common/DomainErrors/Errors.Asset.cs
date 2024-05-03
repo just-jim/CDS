@@ -12,16 +12,10 @@ public static partial class Errors
                 description: "Asset with given ID does not exist");
         }
         
-        public static Error AlreadyExists {
-            get => Error.Conflict(
-                code: "Asset.AlreadyExists",
-                description: "Asset with the given ID already exists");
-        }
-        
         public static Error FileUrlNotFound {
             get => Error.NotFound(
                 code: "AssetFileUrl.NotFound",
-                description: "A fileUrl for the asset with given ID does not exist");
+                description: "No content distribution fileUrl was found for the asset");
         }
     }
 }

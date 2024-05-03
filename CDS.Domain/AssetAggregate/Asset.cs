@@ -52,6 +52,24 @@ public class Asset : AggregateRoot<AssetId, string> {
         return asset;
     }
     
+    public void Update(
+        string name,
+        string description,
+        string fileFormat,
+        string fileSize,
+        string path,
+        Briefing briefing
+    ) {
+        Name = name;
+        Description = description;
+        FileFormat = fileFormat;
+        FileSize = fileSize;
+        Path = path;
+        Briefing = briefing;
+
+        AddDomainEvent(new AssetUpdated(this));
+    }
+    
 #pragma warning disable CS8618
     Asset() { }
 #pragma warning restore CS8618
