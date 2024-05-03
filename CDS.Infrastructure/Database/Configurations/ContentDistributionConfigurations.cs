@@ -58,6 +58,8 @@ public class ContentDistributionConfigurations : IEntityTypeConfiguration<Conten
 
             acdb.Property(acd => acd.FileUrl)
                 .HasMaxLength(200);
+            
+            acdb.HasIndex(acd => acd.AssetId).HasDatabaseName("IX_AssetContentDistributions_AssetId");
         });
         
         builder.Metadata.FindNavigation(nameof(ContentDistribution.AssetContentDistributions))!

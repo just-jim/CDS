@@ -55,6 +55,8 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order> {
                 );
             
             aob.Property(ao => ao.Quantity);
+            
+            aob.HasIndex(ao => ao.AssetId).HasDatabaseName("IX_AssetOrders_AssetId");
         });
         
         builder.Metadata.FindNavigation(nameof(Order.AssetOrders))!
