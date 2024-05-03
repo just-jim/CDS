@@ -15,7 +15,7 @@ public class CreateAssetCommandHandler(IAssetRepository assetRepository, IQueryS
     public async Task<ErrorOr<Asset>> Handle(CreateAssetCommand request, CancellationToken ct) {
         var assetId = AssetId.Create(request.AssetId);
         if (await assetRepository.ExistsAsync(assetId)) {
-            return Errors.Asset.AlreadyExists;
+            return Errors.AssetError.AlreadyExists;
         }
         
         var briefingDomainBriefing = (BriefingDomainBriefing?) await briefingQueryService.FetchDataAsync(request.Name);

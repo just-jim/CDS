@@ -4,7 +4,7 @@ namespace CDS.Domain.Common.DomainErrors;
 
 public static partial class Errors
 {
-    public static class Order
+    public static class OrderError
     {
         public static Error NotFound {
             get => Error.NotFound(

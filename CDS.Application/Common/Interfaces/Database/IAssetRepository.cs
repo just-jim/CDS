@@ -8,4 +8,5 @@ public interface IAssetRepository {
     Task AddAsync(Asset asset);
     Task<Asset?> GetByIdAsync(AssetId assetId);
     Task<bool> ExistsAsync(AssetId assetId);
+    Task<List<Asset>> ListAsync();
 }

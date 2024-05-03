@@ -4,7 +4,7 @@ namespace CDS.Domain.Common.DomainErrors;
 
 public static partial class Errors
 {
-    public static class Asset
+    public static class AssetError
     {
         public static Error NotFound {
             get => Error.NotFound(

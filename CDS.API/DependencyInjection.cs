@@ -1,4 +1,4 @@
-namespace CDS.API.Controllers;
+namespace CDS.API;
 
 public static class DependencyInjection
 {

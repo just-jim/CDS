@@ -13,7 +13,7 @@ public class CreateOrderCommandHandler(IOrderRepository orderRepository) : IRequ
 
     public async Task<ErrorOr<Order>> Handle(CreateOrderCommand request, CancellationToken ct) {
         if (await orderRepository.ExistsAsync(OrderId.Create(request.OrderNumber))) {
-            return Errors.Order.AlreadyExists;
+            return Errors.OrderError.AlreadyExists;
         }
         
         var order = Order.Create(

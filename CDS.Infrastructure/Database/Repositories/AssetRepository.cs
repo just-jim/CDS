@@ -24,4 +24,8 @@ public class AssetRepository(CdsDbContext dbContext) : IAssetRepository {
         dbContext.Assets.Update(asset);
         await dbContext.SaveChangesAsync();
     }
+    
+    public async Task<List<Asset>> ListAsync() {
+        return await dbContext.Assets.ToListAsync();
+    }
 }

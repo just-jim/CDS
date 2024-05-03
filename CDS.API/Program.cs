@@ -1,4 +1,4 @@
-using CDS.API.Controllers;
+using CDS.API;
 using CDS.Application;
 using CDS.Infrastructure;
 using CDS.Infrastructure.Database;
