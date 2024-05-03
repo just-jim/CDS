@@ -17,5 +17,11 @@ public static partial class Errors
                 code: "Asset.AlreadyExists",
                 description: "Asset with the given ID already exists");
         }
+        
+        public static Error FileUrlNotFound {
+            get => Error.NotFound(
+                code: "AssetFileUrl.NotFound",
+                description: "A fileUrl for the asset with given ID does not exist");
+        }
     }
 }

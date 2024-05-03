@@ -2,7 +2,7 @@ namespace CDS.Domain.Common.Models;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>>, IHasDomainEvents
     where TId : ValueObject {
-    readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
+    readonly List<IDomainEvent> _domainEvents = [];
 
     public TId Id { get; protected set; }
 
@@ -34,7 +34,7 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>, IHasDomainEvents
         return Id.GetHashCode();
     }
 
-    public void AddDomainEvent(IDomainEvent domainEvent) {
+    protected void AddDomainEvent(IDomainEvent domainEvent) {
         _domainEvents.Add(domainEvent);
     }
 

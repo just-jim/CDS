@@ -1,7 +1,6 @@
 using CDS.Application.Common.Interfaces.Database;
 using CDS.Domain.AssetAggregate.ValueObjects;
 using CDS.Domain.OrderAggregate;
-using CDS.Domain.OrderAggregate.Entities;
 using CDS.Domain.OrderAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 

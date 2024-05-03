@@ -1,5 +1,7 @@
 using CDS.Application.Assets.Queries.GetAsset;
+using CDS.Application.Assets.Queries.GetAssetMetadata;
 using CDS.Application.Assets.Queries.ListAssets;
+using CDS.Contracts;
 using CDS.Domain.AssetAggregate;
 using ErrorOr;
 using MediatR;
@@ -25,9 +27,20 @@ public class AssetsController(ISender mediator) : ApiController
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAsset(string id)
     {
-        ErrorOr<Asset> listAssetsResult = await mediator.Send(new GetAssetQuery(id));
+        ErrorOr<string> listAssetsResult = await mediator.Send(new GetAssetQuery(id));
 
         return listAssetsResult.Match(
+            Ok,
+            Problem
+        );
+    }
+    
+    [HttpGet("{id}/metadata")]
+    public async Task<IActionResult> GetAssetMetadata(string id)
+    {
+        ErrorOr<AssetResponse> assetResponse = await mediator.Send(new GetAssetMetadataQuery(id));
+
+        return assetResponse.Match(
             Ok,
             Problem
         );

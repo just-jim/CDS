@@ -14,10 +14,10 @@ public record AssetResponse(
 
 public record AssetOrderResponse(
     string OrderId,
-    string Quantity,
+    int Quantity,
     string CustomerName,
     DateOnly OrderDate,
-    int TotalAssets
+    int OrderTotalAssets
 );
 
 public record AssetContentDistributionResponse(
