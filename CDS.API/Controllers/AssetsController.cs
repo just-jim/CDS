@@ -2,7 +2,6 @@ using CDS.Application.Assets.Queries.GetAsset;
 using CDS.Application.Assets.Queries.GetAssetMetadata;
 using CDS.Application.Assets.Queries.ListAssets;
 using CDS.Contracts;
-using CDS.Domain.AssetAggregate;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +13,12 @@ public class AssetsController(ISender mediator) : ApiController
 {
     
     [HttpGet]
-    public async Task<IActionResult> ListAssets()
+    public async Task<IActionResult> ListAssets([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
-        ErrorOr<List<Asset>> listAssetsResult = await mediator.Send(new ListAssetsQuery());
+        var query = new ListAssetsQuery { PageNumber = pageNumber, PageSize = pageSize };
+        ErrorOr<List<AssetShortResponse>> listAssetsResponse = await mediator.Send(query);
 
-        return listAssetsResult.Match(
+        return listAssetsResponse.Match(
             Ok,
             Problem
         );

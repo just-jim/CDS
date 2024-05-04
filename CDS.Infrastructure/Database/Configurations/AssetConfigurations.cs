@@ -38,6 +38,8 @@ public class AssetConfigurations : IEntityTypeConfiguration<Asset> {
         
         builder.Property(a => a.Path)
             .HasMaxLength(500);
+        
+        builder.HasIndex(a => a.Name).HasDatabaseName("IX_Assets_Name");
     }
     
     static void ConfigureBriefingsTable(EntityTypeBuilder<Asset> builder) {

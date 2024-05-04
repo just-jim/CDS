@@ -12,6 +12,16 @@ public record AssetResponse(
     List<AssetContentDistributionResponse> ContentDistributions
 );
 
+public record AssetShortResponse(
+    string Id,
+    string Name,
+    string Description,
+    string? FileFormat,
+    string? FileSize,
+    string? Path,
+    BriefingResponse Briefing
+);
+
 public record AssetOrderResponse(
     string OrderId,
     int Quantity,

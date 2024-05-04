@@ -25,7 +25,11 @@ public class AssetRepository(CdsDbContext dbContext) : IAssetRepository {
         await dbContext.SaveChangesAsync();
     }
     
-    public async Task<List<Asset>> ListAsync() {
-        return await dbContext.Assets.ToListAsync();
+    public async Task<List<Asset>> ListAsync(int pageNumber, int pageSize) {
+        return await dbContext.Assets
+            .OrderBy(a=> a.Name)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
 }
