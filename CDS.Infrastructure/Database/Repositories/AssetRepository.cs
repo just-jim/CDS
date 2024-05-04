@@ -1,6 +1,7 @@
 using CDS.Application.Common.Interfaces.Database;
 using CDS.Domain.AssetAggregate;
 using CDS.Domain.AssetAggregate.ValueObjects;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CDS.Infrastructure.Database.Repositories;
@@ -31,5 +32,11 @@ public class AssetRepository(CdsDbContext dbContext) : IAssetRepository {
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
+    }
+    
+    public async Task<Unit> ResetAsync() {
+        dbContext.Assets.RemoveRange(dbContext.Assets);
+        await dbContext.SaveChangesAsync();
+        return Unit.Value;
     }
 }

@@ -1,6 +1,7 @@
 using CDS.Application.Common.Interfaces.Database;
 using CDS.Domain.AssetAggregate.ValueObjects;
 using CDS.Domain.ContentDistributionAggregate;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CDS.Infrastructure.Database.Repositories;
@@ -23,5 +24,11 @@ public class ContentDistributionRepository(CdsDbContext dbContext) : IContentDis
         return await dbContext.ContentDistributions
             .Where(cd => cd.AssetContentDistributions.Any(acd => acd.AssetId == assetId))
             .ToListAsync();
+    }
+    
+    public async Task<Unit> ResetAsync() {
+        dbContext.ContentDistributions.RemoveRange(dbContext.ContentDistributions);
+        await dbContext.SaveChangesAsync();
+        return Unit.Value;
     }
 }

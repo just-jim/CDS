@@ -1,5 +1,6 @@
 using CDS.Domain.AssetAggregate;
 using CDS.Domain.AssetAggregate.ValueObjects;
+using MediatR;
 
 namespace CDS.Application.Common.Interfaces.Database;
 
@@ -9,4 +10,5 @@ public interface IAssetRepository {
     Task<Asset?> GetByIdAsync(AssetId assetId);
     Task<bool> ExistsAsync(AssetId assetId);
     Task<List<Asset>> ListAsync(int pageNumber, int pageSize);
+    Task<Unit> ResetAsync();
 }

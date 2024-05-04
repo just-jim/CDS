@@ -2,6 +2,7 @@ using CDS.Application.Common.Interfaces.Database;
 using CDS.Domain.AssetAggregate.ValueObjects;
 using CDS.Domain.OrderAggregate;
 using CDS.Domain.OrderAggregate.ValueObjects;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CDS.Infrastructure.Database.Repositories;
@@ -21,5 +22,11 @@ public class OrderRepository(CdsDbContext dbContext) : IOrderRepository {
         return await dbContext.Orders
             .Where(o => o.AssetOrders.Any(ao => ao.AssetId == assetId))
             .ToListAsync();
+    }
+    
+    public async Task<Unit> ResetAsync() {
+        dbContext.Orders.RemoveRange(dbContext.Orders);
+        await dbContext.SaveChangesAsync();
+        return Unit.Value;
     }
 }

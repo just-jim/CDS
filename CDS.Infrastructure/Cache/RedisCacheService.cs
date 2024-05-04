@@ -1,11 +1,13 @@
 using System.Text.Json;
 using CDS.Application.Common.Interfaces.Cache;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using StackExchange.Redis;
 
 namespace CDS.Infrastructure.Cache;
 
-public class RedisCacheService(IDistributedCache cache, ILogger<RedisCacheService> logger) : ICacheService {
+public class RedisCacheService(IDistributedCache cache, ILogger<RedisCacheService> logger, IConfiguration configuration) : ICacheService {
     static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {
         PropertyNameCaseInsensitive = true
     };
@@ -29,5 +31,17 @@ public class RedisCacheService(IDistributedCache cache, ILogger<RedisCacheServic
         }
 
         return null;
+    }
+    
+    public void Purge() {
+        var connection = ConnectionMultiplexer.Connect(
+            new ConfigurationOptions {
+                EndPoints = { configuration.GetConnectionString("Redis")! },
+                AllowAdmin = true
+            }
+        );
+          
+        var server = connection.GetServer(connection.GetEndPoints().First());
+        server.FlushDatabase();
     }
 }
