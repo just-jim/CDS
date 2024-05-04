@@ -11,41 +11,40 @@ using Microsoft.Extensions.Logging;
 namespace CDS.Application.Assets.Commands.CreateAsset;
 
 public class CreateAssetCommandHandler(
-    IAssetRepository assetRepository, 
+    IAssetRepository assetRepository,
     IQueryService briefingQueryService,
     ILogger<CreateAssetCommandHandler> logger
-    ) : IRequestHandler<CreateAssetCommand, ErrorOr<Asset>> {
+) : IRequestHandler<CreateAssetCommand, ErrorOr<Asset>> {
 
     public async Task<ErrorOr<Asset>> Handle(CreateAssetCommand request, CancellationToken ct) {
         var assetId = AssetId.Create(request.AssetId);
-        
-        var briefingDomainBriefing = (BriefingDomainBriefing?) await briefingQueryService.FetchDataAsync(request.Name);
-        var briefing = briefingDomainBriefing != null 
-            ? Briefing.Create(briefingDomainBriefing.CreatedBy,DateOnly.Parse(briefingDomainBriefing.CreatedDate))
-            : Briefing.Create(null,null);
-        
+
+        var briefingDomainBriefing = (BriefingDomainBriefing?)await briefingQueryService.FetchDataAsync(request.Name);
+        var briefing = briefingDomainBriefing != null ? Briefing.Create(briefingDomainBriefing.CreatedBy, DateOnly.Parse(briefingDomainBriefing.CreatedDate)) : Briefing.Create(null, null);
+
         if (await assetRepository.ExistsAsync(assetId)) {
             var asset = await assetRepository.GetByIdAsync(assetId);
             asset!.Update(
-                name: request.Name,
-                description: request.Description,
-                fileFormat: request.FileFormat,
-                fileSize: request.FileSize,
-                path: request.Path,
-                briefing: briefing
+                request.Name,
+                request.Description,
+                request.FileFormat,
+                request.FileSize,
+                request.Path,
+                briefing
             );
             await assetRepository.UpdateAsync(asset);
             logger.LogInformation($"Asset with id '{assetId.Value}' updated");
             return asset;
-        } else {
+        }
+        else {
             var asset = Asset.Create(
-                assetId: assetId,
-                name: request.Name,
-                description: request.Description,
-                fileFormat: request.FileFormat,
-                fileSize: request.FileSize,
-                path: request.Path,
-                briefing: briefing
+                assetId,
+                request.Name,
+                request.Description,
+                request.FileFormat,
+                request.FileSize,
+                request.Path,
+                briefing
             );
             await assetRepository.AddAsync(asset);
             return asset;

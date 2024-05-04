@@ -11,18 +11,18 @@ public class RedisCacheService(IDistributedCache cache, ILogger<RedisCacheServic
     static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {
         PropertyNameCaseInsensitive = true
     };
-    
+
     public void Set(string key, ICacheable cacheable, Type cacheableType) {
         string json = JsonSerializer.Serialize(cacheable, cacheableType, JsonSerializerOptions);
         cache.SetString(key, json);
     }
-        
+
     public ICacheable? Get(string key, Type cacheableType) {
         string? json = cache.GetString(key);
-        
+
         try {
             return (ICacheable?)JsonSerializer.Deserialize(json, cacheableType, JsonSerializerOptions);
-        }
+        } 
         catch (ArgumentNullException) {
             return null;
         } 
@@ -32,7 +32,7 @@ public class RedisCacheService(IDistributedCache cache, ILogger<RedisCacheServic
 
         return null;
     }
-    
+
     public void Purge() {
         var connection = ConnectionMultiplexer.Connect(
             new ConfigurationOptions {
@@ -40,7 +40,7 @@ public class RedisCacheService(IDistributedCache cache, ILogger<RedisCacheServic
                 AllowAdmin = true
             }
         );
-          
+
         var server = connection.GetServer(connection.GetEndPoints().First());
         server.FlushDatabase();
     }

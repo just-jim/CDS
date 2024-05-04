@@ -7,15 +7,14 @@ using Microsoft.Extensions.Logging;
 namespace CDS.Application.Assets.Queries.Admin;
 
 public class AdminQueryHandler(
-    IAssetRepository assetRepository, 
+    IAssetRepository assetRepository,
     IContentDistributionRepository contentDistributionRepository,
     IOrderRepository orderRepository,
     ICacheService cache,
     ILogger<AdminQueryHandler> logger
-    ) : IRequestHandler<ResetQuery, ErrorOr<bool>>,
-        IRequestHandler<DropDbQuery, ErrorOr<bool>>, 
-        IRequestHandler<PurgeCacheQuery, bool>
-{
+) : IRequestHandler<ResetQuery, ErrorOr<bool>>,
+    IRequestHandler<DropDbQuery, ErrorOr<bool>>,
+    IRequestHandler<PurgeCacheQuery, bool> {
 
     public async Task<ErrorOr<bool>> Handle(ResetQuery query, CancellationToken ct) {
         await DropDb();
@@ -23,7 +22,7 @@ public class AdminQueryHandler(
 
         return true;
     }
-    
+
     public async Task<ErrorOr<bool>> Handle(DropDbQuery query, CancellationToken ct) {
         await DropDb();
         return true;
@@ -33,7 +32,7 @@ public class AdminQueryHandler(
         cache.Purge();
         return Task.FromResult(true);
     }
-    
+
     async Task DropDb() {
         await assetRepository.ResetAsync();
         await contentDistributionRepository.ResetAsync();

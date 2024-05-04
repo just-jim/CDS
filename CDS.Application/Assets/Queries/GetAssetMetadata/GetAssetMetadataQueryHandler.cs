@@ -11,13 +11,13 @@ using MediatR;
 namespace CDS.Application.Assets.Queries.GetAssetMetadata;
 
 public class GetAssetMetadataQueryHandler(
-    IAssetRepository assetRepository, 
-    IOrderRepository orderRepository, 
+    IAssetRepository assetRepository,
+    IOrderRepository orderRepository,
     IContentDistributionRepository contentDistributionRepository
-    ) : IRequestHandler<GetAssetMetadataQuery, ErrorOr<AssetResponse>> {
+) : IRequestHandler<GetAssetMetadataQuery, ErrorOr<AssetResponse>> {
     public async Task<ErrorOr<AssetResponse>> Handle(GetAssetMetadataQuery query, CancellationToken ct) {
         var assetId = AssetId.Create(query.AssetId);
-        
+
         if (!await assetRepository.ExistsAsync(assetId)) {
             return Errors.AssetError.NotFound;
         }
@@ -25,7 +25,7 @@ public class GetAssetMetadataQueryHandler(
         Asset asset = (await assetRepository.GetByIdAsync(assetId))!;
         List<Order> orders = await orderRepository.FindOrdersByAssetId(assetId);
         List<ContentDistribution> contentDistributions = await contentDistributionRepository.FindContentDistributionsByAssetId(assetId);
-        
+
         List<AssetOrderResponse> assetOrderResponses = orders
             .Select(order => new AssetOrderResponse(
                 order.Id.Value,
@@ -34,7 +34,7 @@ public class GetAssetMetadataQueryHandler(
                 order.OrderDate,
                 order.TotalAssets
             )).ToList();
-        
+
         List<AssetContentDistributionResponse> assetContentDistributionResponses = contentDistributions
             .Select(cd => new AssetContentDistributionResponse(
                 cd.AssetContentDistributions.First(acd => acd.AssetId == assetId).FileUrl,
@@ -42,7 +42,7 @@ public class GetAssetMetadataQueryHandler(
                 cd.DistributionChannel,
                 cd.DistributionMethod
             )).ToList();
-        
+
         var assetResponse = new AssetResponse(
             asset.Id.Value,
             asset.Name,
@@ -54,7 +54,7 @@ public class GetAssetMetadataQueryHandler(
             assetOrderResponses,
             assetContentDistributionResponses
         );
-        
+
         return assetResponse;
     }
 }

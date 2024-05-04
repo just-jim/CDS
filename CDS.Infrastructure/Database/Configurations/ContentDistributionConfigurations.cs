@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace CDS.Infrastructure.Database.Configurations;
 
 public class ContentDistributionConfigurations : IEntityTypeConfiguration<ContentDistribution> {
-    
+
     public void Configure(EntityTypeBuilder<ContentDistribution> builder) {
         ConfigureContentDistributionsTable(builder);
         ConfigureAssetContentDistributionsTable(builder);
@@ -33,22 +33,21 @@ public class ContentDistributionConfigurations : IEntityTypeConfiguration<Conten
         builder.Property(cd => cd.DistributionMethod)
             .HasMaxLength(100);
     }
-    
+
     static void ConfigureAssetContentDistributionsTable(EntityTypeBuilder<ContentDistribution> builder) {
-        builder.OwnsMany(cd => cd.AssetContentDistributions, acdb =>
-        {
+        builder.OwnsMany(cd => cd.AssetContentDistributions, acdb => {
             acdb.ToTable("AssetContentDistributions");
-    
+
             acdb.WithOwner().HasForeignKey("ContentDistributionId");
 
             acdb.HasKey("Id", "ContentDistributionId");
-            
+
             acdb.Property(acd => acd.Id)
                 .HasConversion(
                     id => id.Value,
                     value => AssetContentDistributionId.Create(value)
                 );
-            
+
             acdb.Property(acd => acd.AssetId)
                 .ValueGeneratedNever()
                 .HasConversion(
@@ -58,10 +57,10 @@ public class ContentDistributionConfigurations : IEntityTypeConfiguration<Conten
 
             acdb.Property(acd => acd.FileUrl)
                 .HasMaxLength(200);
-            
+
             acdb.HasIndex(acd => acd.AssetId).HasDatabaseName("IX_AssetContentDistributions_AssetId");
         });
-        
+
         builder.Metadata.FindNavigation(nameof(ContentDistribution.AssetContentDistributions))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }

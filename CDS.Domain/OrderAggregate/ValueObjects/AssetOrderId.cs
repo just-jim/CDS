@@ -5,7 +5,7 @@ namespace CDS.Domain.OrderAggregate.ValueObjects;
 public sealed class AssetOrderId : EntityId<Guid> {
     AssetOrderId(Guid value) : base(value) {
     }
-    
+
     public static AssetOrderId Create(Guid value) {
         return new AssetOrderId(value);
     }

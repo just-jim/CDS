@@ -7,17 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CDS.Contracts\CDS.Contracts.csproj" />
-      <ProjectReference Include="..\CDS.Domain\CDS.Domain.csproj" />
+        <ProjectReference Include="..\CDS.Contracts\CDS.Contracts.csproj"/>
+        <ProjectReference Include="..\CDS.Domain\CDS.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="11.9.1" />
-      <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+        <PackageReference Include="FluentValidation" Version="11.9.1"/>
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Orders\Commands\" />
+        <Folder Include="Orders\Commands\"/>
     </ItemGroup>
 
 </Project>

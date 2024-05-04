@@ -12,18 +12,17 @@ public class OrderRepository(CdsDbContext dbContext) : IOrderRepository {
         dbContext.Add(order);
         await dbContext.SaveChangesAsync();
     }
-    
+
     public async Task<bool> ExistsAsync(OrderId orderId) {
         return await dbContext.Orders.AnyAsync(order => order.Id == orderId);
     }
-    
-    public async Task<List<Order>> FindOrdersByAssetId(AssetId assetId)
-    {
+
+    public async Task<List<Order>> FindOrdersByAssetId(AssetId assetId) {
         return await dbContext.Orders
             .Where(o => o.AssetOrders.Any(ao => ao.AssetId == assetId))
             .ToListAsync();
     }
-    
+
     public async Task<Unit> ResetAsync() {
         dbContext.Orders.RemoveRange(dbContext.Orders);
         await dbContext.SaveChangesAsync();

@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore;
 namespace CDS.Infrastructure.Database;
 
 public class CdsDbContext(
-    DbContextOptions<CdsDbContext> options, 
+    DbContextOptions<CdsDbContext> options,
     PublishDomainEventsInterceptor publishDomainEventsInterceptor
-    ) : DbContext(options) {
-    
+) : DbContext(options) {
+
     public DbSet<Asset> Assets { get; set; } = null!;
     public DbSet<Order> Orders { get; set; } = null!;
     public DbSet<ContentDistribution> ContentDistributions { get; set; } = null!;
-    
+
     override protected void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder
             .Ignore<List<IDomainEvent>>()

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace CDS.Infrastructure.Clients;
 
 public class BriefingQueryService(HttpClient httpClient, IConfiguration configuration, ILogger<BriefingQueryService> logger) : IQueryService {
-    
+
     readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     readonly string? _baseUrl = configuration.GetConnectionString("BriefingDomain");
 
@@ -19,7 +19,7 @@ public class BriefingQueryService(HttpClient httpClient, IConfiguration configur
             // TODO We can add a retry mechanism here if it's a network error
             return null;
         }
-        
+
         try {
             string json = await response.Content.ReadAsStringAsync();
             var briefing = JsonSerializer.Deserialize<BriefingDomainBriefing>(json, _jsonSerializerOptions);
@@ -28,10 +28,11 @@ public class BriefingQueryService(HttpClient httpClient, IConfiguration configur
             }
             logger.LogInformation($"Briefing for name {briefing.Name} fetched from the Briefing domain");
             return briefing;
-        } catch (JsonException e) {
-            logger.LogError($"Briefing object fetched from Briefing domain for name {briefingName} was malformed",e);
         }
-        
+        catch (JsonException e) {
+            logger.LogError($"Briefing object fetched from Briefing domain for name {briefingName} was malformed", e);
+        }
+
         return null;
     }
 }

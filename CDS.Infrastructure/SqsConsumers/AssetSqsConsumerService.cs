@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace CDS.Infrastructure.SqsConsumers;
 
 public class AssetSqsConsumerService(IServiceProvider serviceProvider) : ISqsConsumerService {
-    
+
     readonly ILogger<AssetSqsConsumerService> _logger = serviceProvider.GetRequiredService<ILogger<AssetSqsConsumerService>>();
     readonly IAmazonSQS _sqs = serviceProvider.GetRequiredService<IAmazonSQS>();
     readonly IConfiguration _configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -31,9 +31,9 @@ public class AssetSqsConsumerService(IServiceProvider serviceProvider) : ISqsCon
 
     public async void HandleMessage(IMessage message) {
         var asset = (AssetDomainAsset)message;
-        
+
         _logger.LogInformation($"consumed Asset with id '{asset.AssetId}'");
-        var command = new CreateAssetCommand(asset.AssetId,asset.Name,asset.Description,asset.FileFormat,asset.FileSize,asset.Path);
+        var command = new CreateAssetCommand(asset.AssetId, asset.Name, asset.Description, asset.FileFormat, asset.FileSize, asset.Path);
         using var scope = serviceProvider.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         await mediator.Send(command);

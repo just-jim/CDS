@@ -10,17 +10,17 @@ public class ListAssetsQueryHandler(IAssetRepository assetRepository) : IRequest
 
     public async Task<ErrorOr<List<AssetShortResponse>>> Handle(ListAssetsQuery query, CancellationToken ct) {
         List<Asset> assets = await assetRepository.ListAsync(query.PageNumber, query.PageSize);
-            
-        return assets.ConvertAll(asset => new AssetShortResponse( 
-                Id: asset.Id.Value,
-                Name: asset.Name,
-                Description: asset.Description,
-                FileFormat: asset.FileFormat,
-                FileSize: asset.FileSize,
-                Path: asset.Path,
-                Briefing: new BriefingResponse(
-                    CreatedBy: asset.Briefing.CreatedBy,
-                    CreatedDate: asset.Briefing.CreatedDate
+
+        return assets.ConvertAll(asset => new AssetShortResponse(
+                asset.Id.Value,
+                asset.Name,
+                asset.Description,
+                asset.FileFormat,
+                asset.FileSize,
+                asset.Path,
+                new BriefingResponse(
+                    asset.Briefing.CreatedBy,
+                    asset.Briefing.CreatedDate
                 )
             )
         );

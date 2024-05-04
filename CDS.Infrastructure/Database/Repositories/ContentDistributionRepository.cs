@@ -11,21 +11,20 @@ public class ContentDistributionRepository(CdsDbContext dbContext) : IContentDis
         dbContext.Add(contentDistribution);
         await dbContext.SaveChangesAsync();
     }
-    
+
     public async Task<ContentDistribution?> GetMostRecentContentDistributionForAnAssetIdAsync(AssetId assetId) {
         return await dbContext.ContentDistributions
             .Where(cd => cd.AssetContentDistributions.Any(acd => acd.AssetId == assetId))
             .OrderByDescending(cd => cd.DistributionDate)
             .FirstOrDefaultAsync();
     }
-    
-    public async Task<List<ContentDistribution>> FindContentDistributionsByAssetId(AssetId assetId)
-    {
+
+    public async Task<List<ContentDistribution>> FindContentDistributionsByAssetId(AssetId assetId) {
         return await dbContext.ContentDistributions
             .Where(cd => cd.AssetContentDistributions.Any(acd => acd.AssetId == assetId))
             .ToListAsync();
     }
-    
+
     public async Task<Unit> ResetAsync() {
         dbContext.ContentDistributions.RemoveRange(dbContext.ContentDistributions);
         await dbContext.SaveChangesAsync();

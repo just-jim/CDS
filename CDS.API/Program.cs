@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services
         .AddApi()
         .AddApplication()
-        .AddInfrastructure(builder.Configuration,builder.Host);
+        .AddInfrastructure(builder.Configuration, builder.Host);
 }
 
 var app = builder.Build();
@@ -18,10 +18,9 @@ var app = builder.Build();
         app.UseSwagger();
         app.UseSwaggerUI();
     }
-    
+
     // Run the database migrations
-    using (var scope = app.Services.CreateScope())
-    {
+    using(var scope = app.Services.CreateScope()) {
         var services = scope.ServiceProvider;
         var dbContext = services.GetRequiredService<CdsDbContext>();
         dbContext.Database.Migrate();
@@ -31,4 +30,3 @@ var app = builder.Build();
 
     app.Run();
 }
-

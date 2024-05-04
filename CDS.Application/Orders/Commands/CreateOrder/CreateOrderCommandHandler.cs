@@ -15,21 +15,21 @@ public class CreateOrderCommandHandler(IOrderRepository orderRepository) : IRequ
         if (await orderRepository.ExistsAsync(OrderId.Create(request.OrderNumber))) {
             return Errors.OrderError.AlreadyExists;
         }
-        
+
         var order = Order.Create(
-            orderNumber: request.OrderNumber,
-            customerName: request.CustomerName,
-            orderDate: request.OrderDate,
-            totalAssets: request.TotalAssets,
-            assetOrders: request.AssetOrders.ConvertAll(assetOrder => AssetOrder.Create(
+            request.OrderNumber,
+            request.CustomerName,
+            request.OrderDate,
+            request.TotalAssets,
+            request.AssetOrders.ConvertAll(assetOrder => AssetOrder.Create(
                     AssetId.Create(assetOrder.AssetId),
                     assetOrder.Quantity
                 )
             )
         );
-        
+
         await orderRepository.AddAsync(order);
-        
+
         return order;
     }
 }

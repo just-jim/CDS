@@ -11,11 +11,11 @@ using Microsoft.Extensions.Logging;
 namespace CDS.Infrastructure.SqsConsumers;
 
 public class ContentDistributionSqsConsumerService(IServiceProvider serviceProvider) : ISqsConsumerService {
-    
+
     readonly ILogger<AssetSqsConsumerService> _logger = serviceProvider.GetRequiredService<ILogger<AssetSqsConsumerService>>();
     readonly IAmazonSQS _sqs = serviceProvider.GetRequiredService<IAmazonSQS>();
     readonly IConfiguration _configuration = serviceProvider.GetRequiredService<IConfiguration>();
-    
+
     public Type GetMessageObjectType() {
         return typeof(ContentDistributionDomainContentDistribution);
     }
@@ -34,11 +34,11 @@ public class ContentDistributionSqsConsumerService(IServiceProvider serviceProvi
         _logger.LogInformation($"consumed Content distribution for the date '{contentDistribution.DistributionDate}'");
 
         var distributionDate = DateOnly.Parse(contentDistribution.DistributionDate);
-        List<AssetContentDistributionCommand> assetContentDistributionCommands = 
-            contentDistribution.Assets.ConvertAll(assetContentDistribution => 
-                new AssetContentDistributionCommand(assetContentDistribution.AssetId,assetContentDistribution.FileURL)
+        List<AssetContentDistributionCommand> assetContentDistributionCommands =
+            contentDistribution.Assets.ConvertAll(assetContentDistribution =>
+                new AssetContentDistributionCommand(assetContentDistribution.AssetId, assetContentDistribution.FileURL)
             );
-        var command = new CreateContentDistributionCommand(distributionDate,contentDistribution.DistributionChannel,contentDistribution.DistributionMethod,assetContentDistributionCommands);
+        var command = new CreateContentDistributionCommand(distributionDate, contentDistribution.DistributionChannel, contentDistribution.DistributionMethod, assetContentDistributionCommands);
         using var scope = serviceProvider.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         await mediator.Send(command);

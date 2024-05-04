@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace CDS.Infrastructure.Database.Configurations;
 
 public class OrderConfigurations : IEntityTypeConfiguration<Order> {
-    
+
     public void Configure(EntityTypeBuilder<Order> builder) {
         ConfigureOrdersTable(builder);
         ConfigureAssetOrdersTable(builder);
@@ -31,16 +31,15 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order> {
 
         builder.Property(o => o.TotalAssets);
     }
-    
+
     static void ConfigureAssetOrdersTable(EntityTypeBuilder<Order> builder) {
-        builder.OwnsMany(o => o.AssetOrders, aob =>
-        {
+        builder.OwnsMany(o => o.AssetOrders, aob => {
             aob.ToTable("AssetOrders");
-    
+
             aob.WithOwner().HasForeignKey("OrderId");
 
             aob.HasKey("Id", "OrderId");
-            
+
             aob.Property(ao => ao.Id)
                 .HasConversion(
                     id => id.Value,
@@ -53,12 +52,12 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order> {
                     id => id.Value,
                     value => AssetId.Create(value)
                 );
-            
+
             aob.Property(ao => ao.Quantity);
-            
+
             aob.HasIndex(ao => ao.AssetId).HasDatabaseName("IX_AssetOrders_AssetId");
         });
-        
+
         builder.Metadata.FindNavigation(nameof(Order.AssetOrders))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }

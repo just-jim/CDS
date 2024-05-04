@@ -51,7 +51,7 @@ public class Asset : AggregateRoot<AssetId, string> {
         asset.AddDomainEvent(new AssetCreated(asset));
         return asset;
     }
-    
+
     public void Update(
         string name,
         string description,
@@ -69,7 +69,7 @@ public class Asset : AggregateRoot<AssetId, string> {
 
         AddDomainEvent(new AssetUpdated(this));
     }
-    
+
 #pragma warning disable CS8618
     Asset() { }
 #pragma warning restore CS8618

@@ -36,7 +36,7 @@ public class SqsPoller(ILogger logger, IAmazonSQS sqs) {
                     callback(messageObject!);
                 }
                 catch (JsonException e) {
-                    logger.LogError($"Consumed malformed message from {queue} sqs queue",e);
+                    logger.LogError($"Consumed malformed message from {queue} sqs queue", e);
                     // Here we could forward the malformed message to a DLQ
                 }
 

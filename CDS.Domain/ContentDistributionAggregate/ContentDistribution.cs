@@ -7,15 +7,17 @@ namespace CDS.Domain.ContentDistributionAggregate;
 
 public class ContentDistribution : AggregateRoot<ContentDistributionId, Guid> {
     readonly List<AssetContentDistribution> _assetContentDistributions = [];
-    
+
     public DateOnly DistributionDate { get; private set; }
     public string DistributionChannel { get; private set; }
     public string DistributionMethod { get; private set; }
-    public IReadOnlyList<AssetContentDistribution> AssetContentDistributions => _assetContentDistributions.AsReadOnly();
+    public IReadOnlyList<AssetContentDistribution> AssetContentDistributions {
+        get => _assetContentDistributions.AsReadOnly();
+    }
 
     ContentDistribution(
-        DateOnly distributionDate, 
-        string distributionChannel, 
+        DateOnly distributionDate,
+        string distributionChannel,
         string distributionMethod,
         List<AssetContentDistribution> assetContentDistributions
     ) : base(ContentDistributionId.CreateUnique()) {
@@ -26,8 +28,8 @@ public class ContentDistribution : AggregateRoot<ContentDistributionId, Guid> {
     }
 
     public static ContentDistribution Create(
-        DateOnly distributionDate, 
-        string distributionChannel, 
+        DateOnly distributionDate,
+        string distributionChannel,
         string distributionMethod,
         List<AssetContentDistribution> assetContentDistributions
     ) {
@@ -35,7 +37,7 @@ public class ContentDistribution : AggregateRoot<ContentDistributionId, Guid> {
         contentDistribution.AddDomainEvent(new ContentDistributionCreated(contentDistribution));
         return contentDistribution;
     }
-    
+
 #pragma warning disable CS8618
     ContentDistribution() { }
 #pragma warning restore CS8618

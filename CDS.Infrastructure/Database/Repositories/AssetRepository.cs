@@ -25,15 +25,15 @@ public class AssetRepository(CdsDbContext dbContext) : IAssetRepository {
         dbContext.Assets.Update(asset);
         await dbContext.SaveChangesAsync();
     }
-    
+
     public async Task<List<Asset>> ListAsync(int pageNumber, int pageSize) {
         return await dbContext.Assets
-            .OrderBy(a=> a.Name)
+            .OrderBy(a => a.Name)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
     }
-    
+
     public async Task<Unit> ResetAsync() {
         dbContext.Assets.RemoveRange(dbContext.Assets);
         await dbContext.SaveChangesAsync();

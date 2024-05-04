@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace CDS.Infrastructure.Database.Configurations;
 
 public class AssetConfigurations : IEntityTypeConfiguration<Asset> {
-    
+
     public void Configure(EntityTypeBuilder<Asset> builder) {
         ConfigureAssetsTable(builder);
         ConfigureBriefingsTable(builder);
@@ -29,28 +29,27 @@ public class AssetConfigurations : IEntityTypeConfiguration<Asset> {
 
         builder.Property(a => a.Description)
             .HasMaxLength(500);
-        
+
         builder.Property(a => a.FileFormat)
             .HasMaxLength(100);
-        
+
         builder.Property(a => a.FileSize)
             .HasMaxLength(100);
-        
+
         builder.Property(a => a.Path)
             .HasMaxLength(500);
-        
+
         builder.HasIndex(a => a.Name).HasDatabaseName("IX_Assets_Name");
     }
-    
+
     static void ConfigureBriefingsTable(EntityTypeBuilder<Asset> builder) {
-        builder.OwnsOne(a => a.Briefing, bb =>
-        {
+        builder.OwnsOne(a => a.Briefing, bb => {
             bb.ToTable("Briefings");
-    
+
             bb.WithOwner().HasForeignKey("AssetId");
 
             bb.HasKey("Id", "AssetId");
-            
+
             bb.Property(b => b.Id)
                 .HasConversion(
                     id => id.Value,
@@ -62,7 +61,7 @@ public class AssetConfigurations : IEntityTypeConfiguration<Asset> {
 
             bb.Property(b => b.CreatedDate);
         });
-        
+
         builder.Metadata.FindNavigation(nameof(Asset.Briefing))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }

@@ -11,7 +11,6 @@ public record AssetResponse(
     List<AssetOrderResponse> Orders,
     List<AssetContentDistributionResponse> ContentDistributions
 );
-
 public record AssetShortResponse(
     string Id,
     string Name,
@@ -21,7 +20,6 @@ public record AssetShortResponse(
     string? Path,
     BriefingResponse Briefing
 );
-
 public record AssetOrderResponse(
     string OrderId,
     int Quantity,
@@ -29,14 +27,12 @@ public record AssetOrderResponse(
     DateOnly OrderDate,
     int OrderTotalAssets
 );
-
 public record AssetContentDistributionResponse(
     string FileUrl,
     DateOnly DistributionDate,
     string DistributionChannel,
     string DistributionMethod
 );
-    
 public record BriefingResponse(
     string? CreatedBy,
     DateOnly? CreatedDate

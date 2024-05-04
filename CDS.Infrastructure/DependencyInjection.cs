@@ -22,13 +22,12 @@ using StackExchange.Redis;
 
 namespace CDS.Infrastructure;
 
-public static class DependencyInjection
-{
+public static class DependencyInjection {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         ConfigurationManager configuration,
         IHostBuilder host
-        ) {
+    ) {
         services
             .AddDatabase(configuration)
             .AddSqsClient(configuration)
@@ -36,7 +35,7 @@ public static class DependencyInjection
             .AddCaching(configuration)
             .AddQueryServices()
             .AddLogger(host);
-        
+
         return services;
     }
 
@@ -49,10 +48,10 @@ public static class DependencyInjection
             new AmazonSQSConfig { ServiceURL = configuration.GetConnectionString("LocalStack") }
         );
         services.AddSingleton<IAmazonSQS>(_ => amazonSqsClient);
-        
+
         return services;
     }
-    
+
     static IServiceCollection AddSqsConsumers(
         this IServiceCollection services
     ) {
@@ -61,15 +60,15 @@ public static class DependencyInjection
             x.ServicesStartConcurrently = true;
             x.ServicesStopConcurrently = false;
         });
-        
+
         // Add the sqs consumers to consume messages from the external domains
         services.AddHostedService(provider => new AssetSqsConsumerService(provider.CreateScope().ServiceProvider));
         services.AddHostedService(provider => new OrderSqsConsumerService(provider.CreateScope().ServiceProvider));
         services.AddHostedService(provider => new ContentDistributionSqsConsumerService(provider.CreateScope().ServiceProvider));
-        
+
         return services;
     }
-    
+
     static IServiceCollection AddDatabase(
         this IServiceCollection services,
         IConfiguration configuration
@@ -77,7 +76,7 @@ public static class DependencyInjection
         services.AddDbContext<CdsDbContext>(
             options => options.UseNpgsql(configuration.GetConnectionString("Postgres"))
         );
-        
+
         services.AddScoped<PublishDomainEventsInterceptor>();
         services.AddScoped<IAssetRepository, AssetRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
@@ -97,18 +96,18 @@ public static class DependencyInjection
             .Enrich.FromLogContext()
             .WriteTo.Console()
         );
-        
+
         return services;
     }
-    
+
     static IServiceCollection AddQueryServices(
         this IServiceCollection services
     ) {
         services.AddHttpClient<IQueryService, BriefingQueryService>();
-        
+
         return services;
     }
-    
+
     static IServiceCollection AddCaching(
         this IServiceCollection services,
         IConfiguration configuration
@@ -121,7 +120,7 @@ public static class DependencyInjection
 
         services.AddSingleton<IDistributedCache>(_ => new RedisCache(opts));
         services.AddSingleton<ICacheService, RedisCacheService>();
-        
+
         return services;
     }
 }

@@ -11,7 +11,6 @@ public record CreateOrderCommand(
     int TotalAssets,
     List<AssetOrderCommand> AssetOrders
 ) : IRequest<ErrorOr<Order>>;
-
 public record AssetOrderCommand(
     string AssetId,
     int Quantity
