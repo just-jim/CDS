@@ -42,7 +42,7 @@ public class SqsPoller(ILogger logger, IAmazonSQS sqs) {
 
                 await sqs.DeleteMessageAsync(queueUrl.QueueUrl, message.ReceiptHandle, ct);
             }
-            await Task.Delay(500, ct);
+            await Task.Delay(100, ct);
         }
     }
 }

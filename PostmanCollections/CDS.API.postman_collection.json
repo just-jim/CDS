@@ -1,0 +1,195 @@
+{
+	"info": {
+		"_postman_id": "81f0defe-d4c7-4feb-ba21-78f4deb787e0",
+		"name": "CDS.API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33498941"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Reset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"System reset\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{cdsHost}}/admin/reset",
+							"protocol": "http",
+							"host": [
+								"{{cdsHost}}"
+							],
+							"path": [
+								"admin",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drop DB",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"System reset\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{cdsHost}}/admin/drop-db",
+							"protocol": "http",
+							"host": [
+								"{{cdsHost}}"
+							],
+							"path": [
+								"admin",
+								"drop-db"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Purge Cache",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"System reset\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{cdsHost}}/admin/purge-cache",
+							"protocol": "http",
+							"host": [
+								"{{cdsHost}}"
+							],
+							"path": [
+								"admin",
+								"purge-cache"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Assets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{cdsHost}}/assets?PageSize=10&PageNumber=1",
+					"protocol": "http",
+					"host": [
+						"{{cdsHost}}"
+					],
+					"path": [
+						"assets"
+					],
+					"query": [
+						{
+							"key": "PageSize",
+							"value": "10"
+						},
+						{
+							"key": "PageNumber",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Asset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Original Order emmitied\", function () {",
+							"    pm.response.to.have.status(302);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{cdsHost}}/assets/ASSET001",
+					"protocol": "http",
+					"host": [
+						"{{cdsHost}}"
+					],
+					"path": [
+						"assets",
+						"ASSET001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Asset Metadata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{cdsHost}}/assets/ASSET001/metadata",
+					"protocol": "http",
+					"host": [
+						"{{cdsHost}}"
+					],
+					"path": [
+						"assets",
+						"ASSET001",
+						"metadata"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

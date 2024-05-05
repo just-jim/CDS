@@ -162,6 +162,22 @@ docker-compose up
 - Use the postman collections and environment to interact with the mocked domains in order to add data to the CDS service
 - Use the CDS API to get the assets and their metadata
 
+### Test the project
+#### Unit tests
+
+To run the unit tests navigate to the project directory and run:
+```bash
+dotnet test
+```
+
+#### End-to-End tests
+
+To run the end-to-end tests:
+- Use postman with the provided 'End-to-End Tests' collection and the 'local' environment.
+- Run the collections using postman runner 
+
+Note: The testing scenarios in the collection have defined postman scripts in order to verify the expected behaviours.
+
 #### DB Migrations
 To create new migrations make sure you have installed: 
 - .NET SDK 8
