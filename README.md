@@ -4,6 +4,18 @@
 ### Project Description
 #### Build a service that aggregates data about assets from 4 external services and exposes an API interface to consumers in order to provide them with the asset content and metadata.
 
+### Summary
+The final solution can be summarized as:
+- A service (CDS) that aggregates data from 4 external domains via SQS and REST API.
+- Using the data to create a complete asset object persisted in its internal DB.
+- Caching the content distribution data (file url) for fast delivery.
+- Exposes an API for the consumers (digital platforms) to be able to list and get the assets including all their metadata.
+- Use of DDD (Domain Driven Design) principles to closely align with business requirements and ensure scalability.
+- Use of Clean Architecture to separate the CDS layers avoiding unnecessary dependencies between them.
+- Use elements of Hexagonal Architecture for easily interchangeable adapters with the external services.
+- Unit tests
+- End-To-End tests
+
 ### Definitions:
 - **Asset**: A file being created by the creative department. We will be referring to it as content or file.
 - **Briefing**: The information around the creative owner of an asset
@@ -32,10 +44,10 @@ The project is structured as follows:
 
 - `CDS.API`: The API layer of the application, serving as the entry point for the digital platform consumers.
 - `CDS.Application`: Application logic and service layer that contains business rules.
-- `CDS.Contracts`: Contracts between the Application layer and the API layer on the format of the response the consumers receives.
-- `CDS.Domain`: Core domain logic and entities.
+- `CDS.Contracts`: Contracts between the layers in order to enable decoupling. Interfaces and DTOs are defined here.
+- `CDS.Domain`: Core domain entities with invariants.
 - `CDS.Infrastructure`: Infrastructure setup including databases, sqs consumers, http clients and caching.
-- `Mock.*`: Mock implementations / microservices for various external domains such as Briefing, Order, Content Distribution, and Assets.
+- `Mock.*`: Mock implementations / microservices for the 4 external domains such as Briefing, Order, Content Distribution, and Asset.
 
 ### Mocking external domains
 
@@ -53,7 +65,7 @@ Each of the external domains will initialize a repository to hold the sample dat
 In order to emulate the functionalities of the external domains I will expose an API in each service to simulate actions from those mocked domains.
 - Asset domain:
   - POST `/assets/:id` this endpoint will trigger a message to be published on the sqs for an asset that was created
-  - POST `/assets/all` this endpoint will trigger messages to be published on the sqs for all the assets that was created at once
+  - POST `/assets/all` this endpoint will trigger messages to be published on the sqs for all the assets that were created at once
 - Briefing domain:
   - GET `/briefings/:name` this endpoint will simulate the exposed API that we assume the Briefing domain would have in order to retrieve a briefing by name
   - GET `/briefings` this endpoint will simulate the exposed API that we assume the Briefing domain would have in order to retrieve all briefings
@@ -80,9 +92,9 @@ In order to achieve the SQS polling for the 3 domains without code duplication, 
 Those SqsConsumerServices will be instantiated as IHostedServices in order to run in the background performing the polling.
 
 In order to avoid code duplication for the polling, a class (SqsPoller) will be instantiated by each SqsConsumerServices which will
-handle the polling for each queue and when it consumes a message it will make a callback to the belonging SqsConsumerService.
+handle the polling for each queue. When it consumes a message it will make a callback to the belonging SqsConsumerService.
 
-The aggregated data will be passed from the Infrastructure layer where the SqsConsumerServices belong, to the Application layer in order to be mapped to domain objects from the Domain layer and to be created and persisted in the database.
+The aggregated data will be passed from the Infrastructure layer where the SqsConsumerServices belong, to the Application layer in order to be mapped to domain entities and to be persisted in the database.
 
 When we receive an Asset from the AssetDomain, while the Application layer creates the object, it will reach out to the Briefing domain to collect the briefing metadata and persist it in parallel with the asset.
 
@@ -93,33 +105,25 @@ When we receive a Content Distribution from the ContentDistributionDomain, the A
 ### CDS Caching of content distribution
 In order to have quick access to the url of the content distribution for each file, the metadata from the content distribution will be cached in a no-sql db
 This way when the consumers (digital platforms) request the file from our service, we will be able to redirect them to the file url without even needing to access the database.
-Optimising this way a lot the speed of the response, and minimizing the load to the system.
+Optimizing this way a lot the speed of the response, and minimizing the load to the system.
 
-The content distribution file when it arrives to the service through SQS it contains a distribution date, which will be used to cache the latest based on the distribution date url for each file.
+The content distribution file, when it arrives at the service through SQS, contains a distribution date, which will be used to cache the latest based on the distribution date url for each file.
 
-A passive cache re-population mechanism is also in place, if for any reason the cache is not available, the service will fetch the data from the database and cache it for future requests.
+A passive cache repopulation mechanism is also in place. If for any reason the cache is not available, the service will fetch the data from the database and cache it for future requests.
 
 ### CDS API
-- GET `/assets` : returns the list of available assets
-- GET `/assets/:id` : redirects the user to the fie url corresponding to the latest content distribution
+- GET `/assets` : returns a paginated list of available assets
+- GET `/assets/:id` : redirects the user to the file url corresponding to the latest content distribution
 - GET `/assets/:id/metadata`: returns the metadata of the asset
 
 #### For testing purposes
-- DELETE `/admin/reset` : Empties the database and purge the cache.
+- DELETE `/admin/reset` : Empty the database and purge the cache.
 - DELETE `/admin/drop-db` : Empties the database.
 - DELETE `/admin/purge-cache` : Purges the cache.
 
 ### Solution
 
-#### Summary
-The final solution can be summarized as:
-- A service (CDS) that aggregates data from 4 external domains via SQS and REST API. 
-- Using the data to create a complete asset object persisted in its internal DB.
-- Caching the content distribution data (file url) for fast delivery.
-- Exposes an API for the consumers (digital platforms) to be able to list and get the assets including all their metadata.
-- Use of DDD (Domain Driven Design) principles to closely align with business requirements and ensure scalability.
-- Use of Clean Architecture to separate the CDS layers avoiding unnecessary dependencies between them.
-- Easily interchangeable adapters with external services.
+// Add context graph of the solution
 
 #### Technologies used
 
@@ -132,16 +136,13 @@ The final solution can be summarized as:
 
 #### Known Limitations
 
-- If the briefing is not available the time an asset is consumed by the CDS service, the asset will be persisted without the briefing metadata.
-- Receiving an order that contain assets that don't exist, will produce orphaned AssetOrder objects in the database.
-- Receiving a content distribution that contain assets that don't exist, will produce orphaned AssetContentDistribution objects in the database and unused cache entries.
-- The asset metadata list for orders and content distribution is not paginated, which could lead to performance issues if the list grows too large.
-- If the briefing domain is not available when an asset is consumed, the asset will be persisted without the briefing metadata.
-
-// Add graph context and container graph of the solution
+- Receiving an order that contains assets that don't exist, will produce orphaned AssetOrder objects in the database.
+- Receiving a content distribution that contains assets that don't exist, will produce orphaned AssetContentDistribution objects in the database and unused cache entries.
+- The asset metadata list for orders and content distribution is not paginated. This could lead to performance issues if the list grows too large.
+- If an asset's briefing is unavailable when an asset is consumed, the asset will be persisted without the briefing metadata.
 
 ### Future improvements
-- S3 & DNS
+- S3 & CDN
 - CI/CD
 - Auth system
 - Use order data to identify most requested assets and serve them better
@@ -176,10 +177,10 @@ To run the end-to-end tests:
 - Use postman with the provided 'End-to-End Tests' collection and the 'local' environment.
 - Run the collections using postman runner 
 
-Note: The testing scenarios in the collection have defined postman scripts in order to verify the expected behaviours.
+Note: The testing scenarios in the collection have defined postman scripts to verify the expected behaviors.
 
 #### DB Migrations
-To create new migrations make sure you have installed: 
+To create new migrations in the future make sure you have installed: 
 - .NET SDK 8
 - Add the Entity Framework Core package
 - install EF Core Tools
@@ -189,7 +190,7 @@ then navigate to the project directory and run:
 dotnet ef migrations add CreateTables -p CDS.Infrastructure -s CDS.API
 ```
 
-Migrations are applied automatically during the service start up.
+Note: Migrations are applied automatically during the service start up.
 
 To manually apply the migrations if needed having a local db running, run:
 ```bash
