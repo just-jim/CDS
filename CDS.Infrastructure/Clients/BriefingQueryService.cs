@@ -1,6 +1,6 @@
 using System.Text.Json;
-using CDS.Application.Common.Interfaces.Clients;
-using CDS.Application.Common.Models;
+using CDS.Contracts.Interfaces.Clients;
+using CDS.Contracts.Models.ExternalDomains;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 

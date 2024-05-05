@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CDS.Application\CDS.Application.csproj"/>
+        <ProjectReference Include="..\CDS.Contracts\CDS.Contracts.csproj"/>
         <ProjectReference Include="..\CDS.Domain\CDS.Domain.csproj"/>
     </ItemGroup>
 

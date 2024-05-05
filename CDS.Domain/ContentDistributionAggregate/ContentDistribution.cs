@@ -37,7 +37,7 @@ public class ContentDistribution : AggregateRoot<ContentDistributionId, Guid> {
         if (assetContentDistributions.Count == 0) {
             throw new InvalidOperationException("An content distribution must have at least one asset.");
         }
-        
+
         var contentDistribution = new ContentDistribution(distributionDate, distributionChannel, distributionMethod, assetContentDistributions);
         contentDistribution.AddDomainEvent(new ContentDistributionCreated(contentDistribution));
         return contentDistribution;

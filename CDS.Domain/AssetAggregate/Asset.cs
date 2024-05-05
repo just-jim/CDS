@@ -46,7 +46,7 @@ public class Asset : AggregateRoot<AssetId, string> {
         if (string.IsNullOrWhiteSpace(name)) {
             throw new InvalidOperationException("An asset must have a name.");
         }
-        
+
         var asset = new Asset(
             assetId,
             name,

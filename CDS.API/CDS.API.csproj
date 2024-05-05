@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\CDS.Application\CDS.Application.csproj"/>
         <ProjectReference Include="..\CDS.Infrastructure\CDS.Infrastructure.csproj"/>
     </ItemGroup>
 

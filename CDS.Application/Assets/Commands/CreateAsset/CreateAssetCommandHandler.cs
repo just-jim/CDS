@@ -1,6 +1,7 @@
-using CDS.Application.Common.Interfaces.Clients;
-using CDS.Application.Common.Interfaces.Database;
-using CDS.Application.Common.Models;
+using CDS.Contracts.Commands;
+using CDS.Contracts.Interfaces.Clients;
+using CDS.Contracts.Interfaces.Database;
+using CDS.Contracts.Models.ExternalDomains;
 using CDS.Domain.AssetAggregate;
 using CDS.Domain.AssetAggregate.Entities;
 using CDS.Domain.AssetAggregate.ValueObjects;

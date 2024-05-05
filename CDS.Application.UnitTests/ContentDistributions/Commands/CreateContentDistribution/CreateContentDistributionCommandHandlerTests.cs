@@ -1,7 +1,9 @@
-using CDS.Application.Common.Interfaces.Cache;
-using CDS.Application.Common.Interfaces.Database;
-using CDS.Application.Common.Models;
 using CDS.Application.ContentDistributions.Commands.CreateContentDistribution;
+using CDS.Contracts.Commands;
+using CDS.Contracts.Interfaces.Cache;
+using CDS.Contracts.Interfaces.Database;
+using CDS.Contracts.Models;
+using CDS.Contracts.Models.Cache;
 using CDS.Domain.ContentDistributionAggregate;
 using ErrorOr;
 using Microsoft.Extensions.Logging;

@@ -1,5 +1,5 @@
 using System.Text.Json;
-using CDS.Application.Common.Interfaces.Cache;
+using CDS.Contracts.Interfaces.Cache;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -21,11 +21,11 @@ public class RedisCacheService(IDistributedCache cache, ILogger<RedisCacheServic
         string? json = cache.GetString(key);
 
         try {
-            return (ICacheable?)JsonSerializer.Deserialize(json, cacheableType, JsonSerializerOptions);
-        } 
+            return (ICacheable?)JsonSerializer.Deserialize(json!, cacheableType, JsonSerializerOptions);
+        }
         catch (ArgumentNullException) {
             return null;
-        } 
+        }
         catch (Exception e) {
             logger.LogError($"Failed to deserialize the cached object of type {cacheableType.Name} with key {key}", e);
         }

@@ -1,7 +1,7 @@
 ﻿using Amazon.SQS;
-using CDS.Application.Common.Interfaces.Consumers;
-using CDS.Application.Common.Models;
-using CDS.Application.Orders.Commands.CreateOrder;
+using CDS.Contracts.Commands;
+using CDS.Contracts.Interfaces.Consumers;
+using CDS.Contracts.Models.ExternalDomains;
 using CDS.Domain.OrderAggregate;
 using CDS.Infrastructure.SqsConsumers.Poller;
 using ErrorOr;

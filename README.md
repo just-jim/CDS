@@ -105,9 +105,9 @@ A passive cache re-population mechanism is also in place, if for any reason the 
 - GET `/assets/:id/metadata`: returns the metadata of the asset
 
 #### For testing purposes
-- POST `/admin/reset` : Empties the database and purge the cache.
-- POST `/admin/drop-db` : Empties the database.
-- POST `/admin/purge-cache` : Purges the cache.
+- DELETE `/admin/reset` : Empties the database and purge the cache.
+- DELETE `/admin/drop-db` : Empties the database.
+- DELETE `/admin/purge-cache` : Purges the cache.
 
 ### Solution
 

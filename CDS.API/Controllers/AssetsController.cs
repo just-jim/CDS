@@ -1,7 +1,5 @@
-using CDS.Application.Assets.Queries.GetAsset;
-using CDS.Application.Assets.Queries.GetAssetMetadata;
-using CDS.Application.Assets.Queries.ListAssets;
-using CDS.Contracts;
+using CDS.Contracts.Models.Responses;
+using CDS.Contracts.Queries;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

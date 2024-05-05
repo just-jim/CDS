@@ -1,6 +1,7 @@
-using CDS.Application.Common.Interfaces.Cache;
-using CDS.Application.Common.Interfaces.Database;
-using CDS.Application.Common.Models;
+using CDS.Contracts.Interfaces.Cache;
+using CDS.Contracts.Interfaces.Database;
+using CDS.Contracts.Models.Cache;
+using CDS.Contracts.Queries;
 using CDS.Domain.AssetAggregate.ValueObjects;
 using CDS.Domain.Common.DomainErrors;
 using ErrorOr;

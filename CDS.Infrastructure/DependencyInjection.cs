@@ -1,8 +1,8 @@
 using Amazon.Runtime;
 using Amazon.SQS;
-using CDS.Application.Common.Interfaces.Cache;
-using CDS.Application.Common.Interfaces.Clients;
-using CDS.Application.Common.Interfaces.Database;
+using CDS.Contracts.Interfaces.Cache;
+using CDS.Contracts.Interfaces.Clients;
+using CDS.Contracts.Interfaces.Database;
 using CDS.Infrastructure.Cache;
 using CDS.Infrastructure.Clients;
 using CDS.Infrastructure.Database;

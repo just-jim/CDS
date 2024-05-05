@@ -1,3 +1,4 @@
+using CDS.Contracts.Queries;
 using FluentValidation;
 
 namespace CDS.Application.Assets.Queries.ListAssets;

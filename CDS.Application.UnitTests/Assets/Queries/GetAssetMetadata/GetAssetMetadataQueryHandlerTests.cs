@@ -1,6 +1,8 @@
 using CDS.Application.Assets.Queries.GetAssetMetadata;
-using CDS.Application.Common.Interfaces.Database;
 using CDS.Contracts;
+using CDS.Contracts.Interfaces.Database;
+using CDS.Contracts.Models.Responses;
+using CDS.Contracts.Queries;
 using CDS.Domain.AssetAggregate;
 using CDS.Domain.AssetAggregate.Entities;
 using CDS.Domain.AssetAggregate.ValueObjects;

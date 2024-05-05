@@ -1,4 +1,4 @@
-using CDS.Application.Common.Interfaces.Database;
+using CDS.Contracts.Interfaces.Database;
 using CDS.Domain.AssetAggregate;
 using CDS.Domain.AssetAggregate.ValueObjects;
 using MediatR;
