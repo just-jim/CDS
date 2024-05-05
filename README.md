@@ -29,7 +29,7 @@ The 4 external services (which belong to different domains) will be mocked in th
 - **Content Distribution Domain**:  We will assume that this domain produces a message on a sqs whenever a new content distribution file is available
 - **Orders domain**:  We will assume that this domain produces a message on a sqs whenever an order is placed
 
-// Add graph of ecosystem
+![Ecosystem-diagram](./Diagrams/Ecosystem-diagram.png)
 
 ### Design and Architecture
 
@@ -48,6 +48,8 @@ The project is structured as follows:
 - `CDS.Domain`: Core domain entities with invariants.
 - `CDS.Infrastructure`: Infrastructure setup including databases, sqs consumers, http clients and caching.
 - `Mock.*`: Mock implementations / microservices for the 4 external domains such as Briefing, Order, Content Distribution, and Asset.
+
+![CDS_Architecture-diagram](./Diagrams/CDS_Architecture.png)
 
 ### Mocking external domains
 
@@ -75,8 +77,6 @@ In order to emulate the functionalities of the external domains I will expose an
   - POST `/orders/original` this endpoint will trigger a message to be published on the sqs for an order that was placed
   - POST `/orders/random` this endpoint will trigger a message to be published on the sqs for an order with randomized data
 
-// TODO Add container diagram of the services interactions
-
 ### CDS Aggregator
 The service will aggregate data from the 4 external domains. 
 In order to do that it will consume messages from the SQS queues from the:
@@ -102,6 +102,8 @@ When we receive an Order from the OrderDomain, the Application layer will create
 
 When we receive a Content Distribution from the ContentDistributionDomain, the Application layer will create the content distribution object and one entity object for each related asset in the content distribution.
 
+![CDS_Container-diagram](./Diagrams/CDS_Container-diagram.png)
+
 ### CDS Caching of content distribution
 In order to have quick access to the url of the content distribution for each file, the metadata from the content distribution will be cached in a no-sql db
 This way when the consumers (digital platforms) request the file from our service, we will be able to redirect them to the file url without even needing to access the database.
@@ -122,8 +124,6 @@ A passive cache repopulation mechanism is also in place. If for any reason the c
 - DELETE `/admin/purge-cache` : Purges the cache.
 
 ### Solution
-
-// Add context graph of the solution
 
 #### Technologies used
 
@@ -147,7 +147,7 @@ A passive cache repopulation mechanism is also in place. If for any reason the c
 - Auth system
 - Use order data to identify most requested assets and serve them better
 
-// Add container graph including future improvements
+![CDS_Container-diagram-optimised](./Diagrams/CDS_Container-diagram-optimised.png)
 
 ### Technical details
 
@@ -179,7 +179,11 @@ To run the end-to-end tests:
 
 Note: The testing scenarios in the collection have defined postman scripts to verify the expected behaviors.
 
-#### DB Migrations
+### DB
+
+![Databse-ER-diagram](./Diagrams/CDS_DB.png)
+
+#### Migrations
 To create new migrations in the future make sure you have installed: 
 - .NET SDK 8
 - Add the Entity Framework Core package
