@@ -29,6 +29,7 @@ public class Order : AggregateRoot<OrderId, string> {
         TotalAssets = totalAssets;
         _assetOrders = assetOrders;
     }
+    
 
     public static Order Create(
         string orderNumber,
@@ -37,6 +38,17 @@ public class Order : AggregateRoot<OrderId, string> {
         int totalAssets,
         List<AssetOrder> assetOrders
     ) {
+        // Define invariants
+        if (string.IsNullOrWhiteSpace(orderNumber)) {
+            throw new InvalidOperationException( "An order must have an non empty orderNumber.");
+        }
+        if (orderDate > DateOnly.FromDateTime(DateTime.UtcNow.Date)) {
+            throw new InvalidOperationException("An order must not have an order date in the future.");
+        }
+        if (assetOrders.Count == 0) {
+            throw new InvalidOperationException("An order must have at least one asset.");
+        }
+        
         var order = new Order(orderNumber, customerName, orderDate, totalAssets, assetOrders);
         order.AddDomainEvent(new OrderCreated(order));
         return order;

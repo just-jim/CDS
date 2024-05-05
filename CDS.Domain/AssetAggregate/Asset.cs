@@ -39,6 +39,14 @@ public class Asset : AggregateRoot<AssetId, string> {
         string path,
         Briefing briefing
     ) {
+        // Define invariants
+        if (string.IsNullOrWhiteSpace(assetId.Value)) {
+            throw new ArgumentNullException(nameof(assetId), "An Asset must have an non empty AssetId");
+        }
+        if (string.IsNullOrWhiteSpace(name)) {
+            throw new InvalidOperationException("An asset must have a name.");
+        }
+        
         var asset = new Asset(
             assetId,
             name,
