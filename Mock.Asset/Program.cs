@@ -37,12 +37,12 @@ app.MapPost("/assets/{id}", async (AssetRepository repo, ISqsController publishe
 
 app.MapPost("/assets/all", async (AssetRepository repo, ISqsController publisher) => {
     List<Asset> assets = repo.GetAll();
-    
+
     foreach (var asset in assets) {
         await publisher.Publish(configuration["SqsQueueName"]!, asset);
         app.Logger.LogInformation($"Asset {asset.AssetId} was published in the assets queue");
     }
-    
+
     return Results.Ok("All assets are emitted to the assets queue");
 });
 

@@ -1,5 +1,4 @@
 using CDS.Application.Assets.Queries.GetAssetMetadata;
-using CDS.Contracts;
 using CDS.Contracts.Interfaces.Database;
 using CDS.Contracts.Models.Responses;
 using CDS.Contracts.Queries;
@@ -17,7 +16,7 @@ using Moq;
 namespace CDS.Application.UnitTests.Assets.Queries.GetAssetMetadata;
 
 public class GetAssetMetadataQueryHandlerTests {
-    
+
     [Fact]
     public async Task Handle_ShouldReturnAssetResponse_WhenAssetExists() {
         // Arrange

@@ -2,7 +2,6 @@ using CDS.Application.Assets.Commands.CreateAsset;
 using CDS.Contracts.Commands;
 using CDS.Contracts.Interfaces.Clients;
 using CDS.Contracts.Interfaces.Database;
-using CDS.Contracts.Models;
 using CDS.Contracts.Models.ExternalDomains;
 using CDS.Domain.AssetAggregate;
 using CDS.Domain.AssetAggregate.Entities;

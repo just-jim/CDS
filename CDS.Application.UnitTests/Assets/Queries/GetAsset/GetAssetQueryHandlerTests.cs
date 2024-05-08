@@ -1,7 +1,6 @@
 using CDS.Application.Assets.Queries.GetAsset;
 using CDS.Contracts.Interfaces.Cache;
 using CDS.Contracts.Interfaces.Database;
-using CDS.Contracts.Models;
 using CDS.Contracts.Models.Cache;
 using CDS.Contracts.Queries;
 using CDS.Domain.AssetAggregate.ValueObjects;
