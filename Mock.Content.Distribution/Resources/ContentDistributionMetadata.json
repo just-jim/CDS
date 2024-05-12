@@ -6,27 +6,27 @@
     {
       "assetId": "ASSET001",
       "name": "Millennium Falcon Concept Art",
-      "fileURL": "https://example.com/assets/ASSET001.jpg"
+      "fileURL": "https://images.pexels.com/photos/20755532/pexels-photo-20755532/free-photo-of-mandalorian.jpeg"
     },
     {
       "assetId": "ASSET002",
       "name": "Lightsaber Prop",
-      "fileURL": "https://example.com/assets/ASSET002.png"
+      "fileURL": "https://images.pexels.com/photos/15418180/pexels-photo-15418180/free-photo-of-close-up-photo-of-stormtrooper.jpeg"
     },
     {
       "assetId": "ASSET003",
       "name": "Darth Vader Costume",
-      "fileURL": "https://example.com/assets/ASSET003.jpg"
+      "fileURL": "https://images.pexels.com/photos/894010/pexels-photo-894010.jpeg"
     },
     {
       "assetId": "ASSET004",
       "name": "Star Wars Sound Effects",
-      "fileURL": "https://example.com/assets/ASSET004.wav"
+      "fileURL": "https://cms-public-artifacts.artlist.io/content/music/aac/12964_262522_262522_Broken_Sky_-16-44.1-.aac"
     },
     {
       "assetId": "ASSET005",
       "name": "Star Wars Movie Poster",
-      "fileURL": "https://example.com/assets/ASSET005.pdf"
+      "fileURL": "https://images.pexels.com/photos/7499839/pexels-photo-7499839.jpeg"
     },
     {
       "assetId": "ASSET006",
@@ -36,22 +36,22 @@
     {
       "assetId": "ASSET007",
       "name": "Stormtrooper Helmet",
-      "fileURL": "https://example.com/assets/ASSET007.jpg"
+      "fileURL": "https://images.pexels.com/photos/7829101/pexels-photo-7829101.jpeg"
     },
     {
       "assetId": "ASSET008",
       "name": "Star Wars Music Score",
-      "fileURL": "https://example.com/assets/ASSET008.pdf"
+      "fileURL": "https://images.pexels.com/photos/4305433/pexels-photo-4305433.jpeg"
     },
     {
       "assetId": "ASSET009",
       "name": "BB-8 Toy",
-      "fileURL": "https://example.com/assets/ASSET009.jpg"
+      "fileURL": "https://images.pexels.com/photos/6320591/pexels-photo-6320591.jpeg"
     },
     {
       "assetId": "ASSET010",
       "name": "R2-D2 Wallpaper",
-      "fileURL": "https://example.com/assets/ASSET010.jpg"
+      "fileURL": "https://images.pexels.com/photos/14561255/pexels-photo-14561255.jpeg"
     }
   ]
 }
